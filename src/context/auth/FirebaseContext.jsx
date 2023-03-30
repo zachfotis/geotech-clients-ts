@@ -1,11 +1,15 @@
-import { createContext, useState, useRef, useEffect } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getDocs, collection, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { db } from '../../firebase.config';
 
 import Spinner from '../../components/layout/Spinner';
 
 const FirebaseContext = createContext();
+
+export const useFirebase = () => {
+  return useContext(FirebaseContext);
+};
 
 export const FirebaseProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
