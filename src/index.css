@@ -1,0 +1,1186 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Variables */
+:root {
+  --heading-color: #57666f;
+  --heading-color-light: #a0a8ad;
+  --heading-color-trans: rgba(160, 168, 173, 0.06);
+  --geotech-color-light: rgb(55, 205, 190);
+  --geotech-color-trans: rgba(27, 216, 197, 0.05);
+}
+
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Mulish', sans-serif;
+}
+
+/* ----------------------------- SPINNER ----------------------------- */
+.loadingSpinnerContainer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 5000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadingSpinner {
+  width: 64px;
+  height: 64px;
+  border: 8px solid;
+  border-color: #00cc66 transparent #00cc66 transparent;
+  border-radius: 50%;
+  animation: spin 1.2s linear infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loadingSpinnerContainerSmall {
+  position: absolute;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadingSpinnerSmall {
+  width: 24px;
+  height: 24px;
+  border: 3px solid;
+  border-color: #00cc66 transparent #00cc66 transparent;
+  border-radius: 50%;
+  animation: spin 1.2s linear infinite;
+}
+
+/* ----------------------------- MODAL ----------------------------- */
+
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.modal-content .title-bar {
+  background-color: #000000;
+  color: #fff;
+  padding: 5px 10px;
+  font-weight: 500;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.modal-content .main-content {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 20px;
+}
+
+.modal-content .main-content .buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  gap: 10px;
+}
+
+/* ----------------------------- MAIN ----------------------------- */
+
+main {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #fff;
+}
+
+/* ----------------------------- NAVBAR ----------------------------- */
+nav {
+  width: 100%;
+  padding: 10px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav .logo {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+nav .logo img {
+  height: 40px;
+}
+
+nav .logo h1 {
+  margin: 0px 10px;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+nav .logo .badge {
+  margin-top: 4px;
+}
+
+nav .top-menu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Login Section */
+
+.login-section {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ----------------------------- FORGOT PASSWORD ----------------------------- */
+
+.forgot-password-section {
+  width: 80%;
+  flex: auto;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.forgot-password-section h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.forgot-password-section form {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.forgot-password-section form .label {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 0;
+}
+
+.forgot-password-section form .label input {
+  width: 100%;
+  max-width: 400px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* ----------------------------- PROFILE ----------------------------- */
+
+.profile-section {
+  width: 80%;
+  flex: auto;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.profile-section > h1 {
+  font-size: 32px;
+  font-weight: 400;
+  margin-top: 50px;
+  text-transform: uppercase;
+  color: var(--heading-color);
+}
+
+.profile-section > p {
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-top: 10px;
+  color: var(--heading-color);
+  font-style: italic;
+}
+
+.profile-section .profile-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 80px;
+  margin: 40px 0;
+}
+
+/* Top Container */
+.profile-section .profile-container .avatar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.profile-section .profile-container .avatar-container img {
+  max-width: 140px;
+}
+
+.profile-section .profile-container .avatar-container label {
+  width: max-content;
+}
+
+.profile-section .profile-container .avatar-container #user-image-upload {
+  display: none;
+}
+
+.profile-section .profile-container .form-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+}
+.profile-section .profile-container .form-container .form-group {
+  width: 100%;
+  max-width: 500px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.profile-section .profile-container .form-container .form-group > input {
+  width: 100%;
+  transition: all 0.3s ease-in-out;
+}
+
+.profile-section .profile-container .form-container .form-group > div {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+}
+
+/* ----------------------------- PROJECTS ----------------------------- */
+
+.projects-section {
+  width: 80%;
+  flex: auto;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.projects-section > h1 {
+  font-size: 32px;
+  font-weight: 400;
+  margin-top: 50px;
+  text-transform: uppercase;
+  color: var(--heading-color);
+}
+
+.projects-section form {
+  width: 100%;
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.projects-section form button {
+  margin-left: 15px;
+}
+
+.projects-section .projects-container {
+  width: 100%;
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  text-align: center;
+}
+
+.projects-section .projects-container :last-child p:nth-of-type(1) {
+  border-bottom-left-radius: 0.75rem;
+}
+.projects-section .projects-container :last-child .actions {
+  border-bottom-right-radius: 0.75rem;
+}
+
+.projects-section .projects-container .grid-headers h1 {
+  color: #fff;
+  background-color: var(--geotech-color-light);
+  padding: 10px;
+  font-weight: 500;
+  border-bottom: 1px solid var(--heading-color-light);
+}
+
+.projects-section .projects-container .grid-content > * {
+  padding: 20px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid var(--heading-color-light);
+  border-left: 1px solid var(--heading-color-light);
+}
+
+.projects-section .projects-container .grid-content :last-child {
+  border-right: 1px solid var(--heading-color-light);
+}
+
+.projects-section .projects-container .grid-content .actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* ----------------------------- SINGLE PROJECT ----------------------------- */
+
+.project-section {
+  width: 80%;
+  flex: auto;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.project-section > h1 {
+  font-size: 32px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--heading-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.project-section .project-info-container {
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 40px;
+}
+
+.project-section .project-info-container > h1,
+.project-section .project-files-container > h1 {
+  font-size: 24px;
+  font-weight: 500;
+  margin-top: 30px;
+}
+
+.project-section .project-info {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  gap: 30px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  padding: 30px;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.project-section .project-info h2,
+.project-section .project-info span,
+.project-section .project-info a {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--heading-color);
+}
+
+.project-section .project-info .left-container,
+.project-section .project-info .right-container {
+  width: max-content;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-gap: 20px;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1;
+}
+
+.project-section .project-files-container {
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 40px;
+}
+
+.project-section .project-files-container .category-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background-color: var(--heading-color-trans);
+  border-radius: 0.75rem;
+  gap: 25px;
+  padding: 30px;
+  overflow: hidden;
+}
+
+.project-section .project-files-container .category-container > h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.project-section .project-files-container .category-container .category-files-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 30px;
+  padding-left: 10px;
+}
+
+.project-section .project-files-container .category-container .category-files-container img {
+  width: 60px;
+  height: auto;
+  cursor: pointer;
+}
+
+.project-section .project-files-container .category-container .category-files-container .file-download {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 5px;
+  font-size: 16px;
+}
+
+.project-section .project-files-container .category-container .category-files-container .file-download .uploaded {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--heading-color);
+}
+
+.project-section .project-files-container .category-container .category-files-container .file-download .buttons {
+  width: 100%;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  font-size: 16px;
+  flex-wrap: wrap;
+}
+
+/* ----------------------------- DASHBOARD ----------------------------- */
+
+.dashboard-section {
+  width: 100%;
+  padding: 30px;
+}
+
+.dashboard-section nav {
+  margin-bottom: 30px;
+  padding: 5px 20px;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.dashboard-section nav .functions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 30px;
+}
+
+.dashboard-section nav .functions > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.dashboard-section nav .circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.dashboard-section .tab-content {
+  width: 100%;
+  padding: 20px;
+}
+
+/* ----------------------------- DASHBOARD CREATE USER----------------------------- */
+
+.dashboard-section .tab-content .create-user {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
+  padding: 20px;
+}
+
+.create-user-form {
+  width: fit-content;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
+  overflow: hidden;
+}
+
+.create-user-form .create-user-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.create-user-container .checkbox-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.create-user-form .create-user-container .create-user-form-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+/* ------ AVATAR CONTAINER ------ */
+.create-user-form-container .avatar-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+}
+
+.create-user-form-container .avatar-container #user-image-upload {
+  display: none;
+}
+
+.create-user-form-container .avatar-container img {
+  height: 80px;
+}
+
+/* ------ FORM CONTAINER ------ */
+.create-user-form-container .form-container {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.create-user-form-container .form-container > input {
+  width: 100%;
+}
+
+.create-user-form-container .form-container .fullname {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.create-user-form-container .form-container .fullname > input {
+  flex: auto;
+}
+
+.create-user-form-container .form-container .is-admin,
+.create-user-form-container .form-container .notify {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+}
+
+/* ------ EDIT CONTAINER ------ */
+
+.edit-user-form {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+  overflow: hidden;
+}
+
+/* SEARCH BAR */
+.edit-user-form .search-bar-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.edit-user-form .search-bar-container input[type='text'] {
+  width: 100%;
+}
+
+/* RESULTS */
+.edit-user-form .user-results-container {
+  flex: 1;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+}
+
+.edit-user-form .user-results-container .grid-headers > h1 {
+  border: 1px solid var(--heading-color-light);
+  padding: 10px 0px;
+}
+
+.edit-user-form .user-results-container .grid-content > * {
+  padding: 10px;
+  border: 1px solid var(--heading-color-trans);
+}
+
+.edit-user-form .user-results-container .grid-content > h1 {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-user-form .user-results-container .grid-content .buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.edit-user-form .user-results-container .grid-content .buttons button {
+  width: 100px;
+}
+
+/* ----------------------------- DASHBOARD CREATE COMPANY----------------------------- */
+
+.dashboard-section .tab-content .create-company {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.create-company-form {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.create-company-form .checkbox-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+}
+
+.create-company-form > input {
+  width: 500px;
+}
+
+.create-company-form .vat-container {
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.create-company-form .vat-container > input {
+  width: 100%;
+}
+
+.create-company-form .address-container,
+.create-company-form .address-container-2 {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.create-company-form .address-container > input:first-child,
+.create-company-form .address-container-2 > input:first-child {
+  flex: 3;
+}
+
+.create-company-form .address-container > input:last-child,
+.create-company-form .address-container-2 > input:last-child {
+  flex: 1;
+}
+
+/* ----------------------------- DASHBOARD CREATE PROJECT----------------------------- */
+
+.dashboard-section .tab-content .create-project {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+
+.create-project .create-project-form {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.create-project-form select {
+  width: 300px;
+}
+
+.create-project-form input {
+  width: 500px;
+}
+
+/* ----------------------------- DASHBOARD UPLOAD FILE ----------------------------- */
+
+.dashboard-section .tab-content .upload-file {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+
+.upload-file .upload-file-form {
+  width: fit-content;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.upload-file-form select {
+  width: 300px;
+}
+
+.upload-file-form input {
+  width: 500px;
+}
+
+.upload-file-form textarea {
+  width: 500px;
+}
+
+.upload-file-form .container-3 {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.upload-file-form .container-4 {
+  width: 100%;
+}
+
+.upload-file-form .container-5 {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.upload-file-form .container-5 input {
+  width: 20px;
+}
+
+.upload-file-form .container-6 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* ----------------------------- MEDIA QUERIES----------------------------- */
+
+@media screen and (max-width: 1368px) {
+  .projects-section,
+  .project-section {
+    width: 100%;
+    padding: 40px 20px;
+  }
+
+  .profile-section {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  /* NAV */
+  nav {
+    padding: 10px 15px;
+  }
+  nav .logo > h1 {
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+
+  nav .logo > div {
+    display: none;
+  }
+
+  nav .top-menu > li:first-child {
+    display: none;
+  }
+  /* FORGOT PASSWORD */
+  .forgot-password-section {
+    width: 100%;
+  }
+
+  /* PROJECTS */
+  .projects-section > h1 {
+    margin-top: 0px;
+  }
+
+  .projects-section .projects-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .projects-section .projects-container .grid-headers {
+    display: none;
+  }
+
+  .projects-section .projects-container .grid-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0px;
+    border: 1px solid #e6e6e6;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: left;
+  }
+
+  .projects-section .projects-container .grid-content > * {
+    border: none;
+    padding: 5px;
+  }
+
+  .projects-section .projects-container .grid-content .actions {
+    flex-direction: row;
+    border-right: none;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  /* PROJECT */
+  .project-section .project-info {
+    padding: 10px;
+    flex-direction: column;
+  }
+
+  .project-section .project-info .left-container,
+  .project-section .project-info .right-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .project-section .project-info .right-container {
+    border-top: 1px solid #e6e6e6;
+    padding-top: 30px;
+  }
+
+  .project-section .project-info .left-container > h2,
+  .project-section .project-info .right-container > h2 {
+    display: none;
+  }
+
+  .project-section .project-files-container .category-container {
+    padding: 15px 10px;
+  }
+
+  /* DASHBOARD */
+  .dashboard-section {
+    padding: 10px;
+  }
+  .dashboard-section nav .functions {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .dashboard-section nav > p {
+    display: none;
+  }
+
+  .dashboard-section .tab-content {
+    padding: 20px 0px;
+  }
+
+  /*  DASHBOARD CREATE USER */
+  .create-user-form {
+    width: 100%;
+  }
+  .create-user-form-container .form-container {
+    width: 100%;
+  }
+
+  .create-user-form-container .form-container .fullname {
+    flex-direction: column;
+  }
+
+  .create-user-form-container .form-container .fullname > input {
+    width: 100%;
+  }
+
+  /* ------ EDIT CONTAINER ------ */
+  .edit-user-form {
+    border-top: 1px solid #e6e6e6;
+    padding-top: 30px;
+  }
+
+  .edit-user-form .search-bar-container {
+    flex-direction: column;
+  }
+
+  .edit-user-form .search-bar-container input {
+    width: 100%;
+  }
+
+  .edit-user-form .user-results-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .edit-user-form .user-results-container .grid-headers {
+    display: none;
+  }
+
+  .edit-user-form .user-results-container .grid-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0px;
+    border: 1px solid #e6e6e6;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: left;
+  }
+
+  .edit-user-form .user-results-container .grid-content > * {
+    border: none;
+    padding: 5px;
+  }
+
+  .edit-user-form .user-results-container .grid-content > h1 {
+    text-align: left;
+  }
+
+  .edit-user-form .user-results-container .grid-content .image-container {
+    justify-content: flex-start;
+  }
+
+  .edit-user-form .user-results-container .grid-content .buttons {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  /* DASHBOARD CREATE COMPANY */
+  .create-company-form {
+    width: 100%;
+  }
+
+  .create-company-form > input {
+    width: 100%;
+  }
+
+  /* DASHBOARD CREATE PROJECT */
+  .create-project .create-project-form {
+    width: 100%;
+  }
+  .create-project .create-project-form > div {
+    width: 100%;
+  }
+
+  .create-project-form select {
+    width: 100%;
+  }
+
+  .create-project-form input {
+    width: 100%;
+  }
+
+  /* DASHBOARD UPLOAD FILE */
+
+  .upload-file .upload-file-form {
+    width: 100%;
+    gap: 30px;
+  }
+
+  .upload-file .upload-file-form > div {
+    width: 100%;
+  }
+
+  .upload-file-form select {
+    width: 100%;
+  }
+
+  .upload-file-form input {
+    width: 100%;
+  }
+
+  .upload-file-form textarea {
+    width: 100%;
+  }
+
+  /* USER PROFILE */
+  .profile-section {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .profile-section > h1 {
+    margin-top: 0px;
+  }
+
+  .profile-section .profile-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .profile-section .profile-container .form-container .form-group {
+    max-width: 100%;
+  }
+}
