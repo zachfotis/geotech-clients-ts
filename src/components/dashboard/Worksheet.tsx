@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react';
 import { useFirebase } from '../../context/auth/FirebaseContext';
+import { useWorksheetContext } from '../../context/auth/WorksheetContext';
 import { Company, Project } from '../../types';
 import { getCompanies, getProjects } from '../../utils/common-functions';
+import Worksheet_ProjectInfo from './Worksheet_ProjectInfo';
 
 function Worksheet() {
   const { setLoading } = useFirebase();
+  const { worksheetInfo } = useWorksheetContext();
+
   const [companies, setCompanies] = useState<Company[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
 
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
-  const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
+  const [isReadyToCreate, setIsReadyToCreate] = useState(false);
 
   // Get Companies
   useEffect(() => {
@@ -29,14 +33,14 @@ function Worksheet() {
   // Check if ready to submit
   useEffect(() => {
     if (selectedCompany && selectedProject) {
-      setIsReadyToSubmit(true);
+      setIsReadyToCreate(true);
     } else {
-      setIsReadyToSubmit(false);
+      setIsReadyToCreate(false);
     }
   }, [selectedCompany, selectedProject]);
 
   return (
-    <section className="w-full flex flex-col justify-start items-start flex-wrap gap-5 p-5">
+    <section className="w-full flex flex-col justify-start items-start flex-wrap gap-10 p-5">
       <h1 className="text-xl font-bold">Add Worksheet to Project</h1>
       {/* SELECTIONS */}
       <div className="flex justify-start items-center gap-10">
@@ -94,11 +98,16 @@ function Worksheet() {
           </select>
         </div>
       </div>
-      {/* WORKSHEET */}
-      <h1 className={`mt-10 ${isReadyToSubmit ? 'bg-green-400' : 'bg-red-400'}  p-5 rounded-lg`}>
-        {selectedCompany?.vat ? `${selectedCompany.title}` : 'No company selected'} -{' '}
-        {selectedProject?.id ? `${selectedProject.id}` : 'No project selected'}
+      {/* ERRORS */}
+      <h1 className={`${isReadyToCreate ? 'bg-green-400' : 'bg-red-400'} p-3 rounded-lg`}>
+        {selectedCompany?.vat ? `${selectedCompany.title}` : 'Select a company'} -{' '}
+        {selectedProject?.id ? `${selectedProject.id}` : 'Select a project'}
       </h1>
+      {/* WORKSHEET */}
+      {worksheetInfo.id}
+      <div className="w-full flex justify-start items-start flex-wrap gap-20">
+        <Worksheet_ProjectInfo />
+      </div>
     </section>
   );
 }

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
+import { NavLink, Navigate, Route, Routes } from 'react-router-dom';
 import CreateCompany from '../components/dashboard/CreateCompany';
 import CreateProject from '../components/dashboard/CreateProject';
 import CreateUser from '../components/dashboard/CreateUser';
@@ -7,6 +7,7 @@ import Payment from '../components/dashboard/Payment';
 import UploadFile from '../components/dashboard/UploadFile';
 import Worksheet from '../components/dashboard/Worksheet';
 import FirebaseContext from '../context/auth/FirebaseContext';
+import { WorksheetProvider } from '../context/auth/WorksheetContext';
 
 function Dashboard() {
   const { user, loggedIn } = useContext(FirebaseContext);
@@ -103,14 +104,16 @@ function Dashboard() {
         </NavLink>
       </div>
       <div className="tab-content shadow-lg rounded-xl outline-1 outline outline-slate-200">
-        <Routes>
-          <Route path="/project" element={<CreateProject />} />
-          <Route path="/user" element={<CreateUser />} />
-          <Route path="/company" element={<CreateCompany />} />
-          <Route path="/deliverables" element={<UploadFile />} />
-          <Route path="/payment" element={<Payment />} />
-          <Route path="/worksheet" element={<Worksheet />} />
-        </Routes>
+        <WorksheetProvider>
+          <Routes>
+            <Route path="/project" element={<CreateProject />} />
+            <Route path="/user" element={<CreateUser />} />
+            <Route path="/company" element={<CreateCompany />} />
+            <Route path="/deliverables" element={<UploadFile />} />
+            <Route path="/payment" element={<Payment />} />
+            <Route path="/worksheet" element={<Worksheet />} />
+          </Routes>
+        </WorksheetProvider>
       </div>
     </section>
   );
