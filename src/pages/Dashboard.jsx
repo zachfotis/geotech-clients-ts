@@ -96,11 +96,11 @@ function Dashboard() {
         <NavLink to="/dashboard/deliverables" className={activeLink}>
           Deliverables
         </NavLink>
+        <NavLink to="/dashboard/worksheet" className={activeLink}>
+          Worksheet
+        </NavLink>
         <NavLink to="/dashboard/payment" className={activeLink}>
           Payment
-        </NavLink>
-        <NavLink to="/dashboard/worksheet" className={activeLink}>
-          Work Sheet
         </NavLink>
       </div>
       <div className="tab-content shadow-lg rounded-xl outline-1 outline outline-slate-200">
@@ -110,8 +110,8 @@ function Dashboard() {
             <Route path="/user" element={<CreateUser />} />
             <Route path="/company" element={<CreateCompany />} />
             <Route path="/deliverables" element={<UploadFile />} />
-            <Route path="/payment" element={<Payment />} />
             <Route path="/worksheet" element={<Worksheet />} />
+            <Route path="/payment" element={<Payment />} />
           </Routes>
         </WorksheetProvider>
       </div>

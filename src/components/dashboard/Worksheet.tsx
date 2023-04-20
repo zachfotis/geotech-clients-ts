@@ -4,10 +4,11 @@ import { useWorksheetContext } from '../../context/auth/WorksheetContext';
 import { Company, Project } from '../../types';
 import { getCompanies, getProjects } from '../../utils/common-functions';
 import Worksheet_ProjectInfo from './Worksheet_ProjectInfo';
+import Worksheet_WellLocation from './Worksheet_WellLocation';
 
 function Worksheet() {
   const { setLoading } = useFirebase();
-  const { worksheetInfo } = useWorksheetContext();
+  const { worksheetInfo, fetchWorksheetFromDB, saveWorksheetToDB } = useWorksheetContext();
 
   const [companies, setCompanies] = useState<Company[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -30,6 +31,13 @@ function Worksheet() {
     }
   }, [selectedCompany]);
 
+  // Initialize worksheet
+  useEffect(() => {
+    if (selectedProject) {
+      fetchWorksheetFromDB(selectedProject.id);
+    }
+  }, [selectedProject]);
+
   // Check if ready to submit
   useEffect(() => {
     if (selectedCompany && selectedProject) {
@@ -38,6 +46,12 @@ function Worksheet() {
       setIsReadyToCreate(false);
     }
   }, [selectedCompany, selectedProject]);
+
+  const handleSaveWorksheet = async () => {
+    if (!selectedProject || !worksheetInfo.id) return;
+
+    saveWorksheetToDB();
+  };
 
   return (
     <section className="w-full flex flex-col justify-start items-start flex-wrap gap-10 p-5">
@@ -103,11 +117,18 @@ function Worksheet() {
         {selectedCompany?.vat ? `${selectedCompany.title}` : 'Select a company'} -{' '}
         {selectedProject?.id ? `${selectedProject.id}` : 'Select a project'}
       </h1>
-      {/* WORKSHEET */}
-      {worksheetInfo.id}
-      <div className="w-full flex justify-start items-start flex-wrap gap-20">
-        <Worksheet_ProjectInfo />
-      </div>
+      {selectedProject?.id && (
+        <>
+          {/* WORKSHEET */}
+          <div className="w-full flex justify-start items-start flex-wrap gap-20">
+            <Worksheet_ProjectInfo />
+            <Worksheet_WellLocation />
+          </div>
+          <button className="btn btn-outline btn-success" onClick={handleSaveWorksheet}>
+            Save Worksheet
+          </button>
+        </>
+      )}
     </section>
   );
 }

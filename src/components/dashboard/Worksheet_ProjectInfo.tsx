@@ -14,7 +14,7 @@ function Worksheet_ProjectInfo() {
           className="w-full input input-bordered input-sm"
           id="project_info_date"
           type="date"
-          value={worksheetInfo.projectInfo.date.toISOString().slice(0, 10)}
+          value={worksheetInfo?.projectInfo?.date.toISOString().slice(0, 10) || new Date().toISOString().slice(0, 10)}
           required
           onChange={(e) => {
             // Check if date is valid
@@ -36,7 +36,7 @@ function Worksheet_ProjectInfo() {
           className="w-full input input-bordered input-sm"
           id="project_info_client"
           type="text"
-          value={worksheetInfo.projectInfo.client}
+          value={worksheetInfo?.projectInfo?.client || ''}
           required
           onChange={(e) => {
             worksheetInfoDispatch({
@@ -54,7 +54,7 @@ function Worksheet_ProjectInfo() {
           className="w-full input input-bordered input-sm"
           id="project_info_project"
           type="text"
-          value={worksheetInfo.projectInfo.project}
+          value={worksheetInfo?.projectInfo?.project || ''}
           required
           onChange={(e) => {
             worksheetInfoDispatch({
@@ -72,7 +72,7 @@ function Worksheet_ProjectInfo() {
           className="w-full input input-bordered input-sm"
           id="project_info_project_manager"
           type="text"
-          value={worksheetInfo.projectInfo.projectManager}
+          value={worksheetInfo?.projectInfo?.projectManager || ''}
           required
           onChange={(e) => {
             worksheetInfoDispatch({
@@ -90,7 +90,7 @@ function Worksheet_ProjectInfo() {
           className="w-full input input-bordered input-sm"
           id="project_info_charge"
           type="text"
-          value={worksheetInfo.projectInfo.charge}
+          value={worksheetInfo?.projectInfo?.charge || ''}
           required
           onChange={(e) => {
             worksheetInfoDispatch({
@@ -108,7 +108,7 @@ function Worksheet_ProjectInfo() {
           className="w-full input input-bordered input-sm"
           id="project_info_rig_company"
           type="text"
-          value={worksheetInfo.projectInfo.rigCompany}
+          value={worksheetInfo?.projectInfo?.rigCompany || ''}
           required
           onChange={(e) => {
             worksheetInfoDispatch({
