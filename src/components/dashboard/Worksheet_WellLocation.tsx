@@ -39,8 +39,8 @@ function Worksheet_WellLocation() {
       const result = convertWGS84toEGSA87(f, l);
 
       // round to whole numbers
-      const y = Math.round(result[0]);
-      const x = Math.round(result[1]);
+      const x = Math.round(result[0]);
+      const y = Math.round(result[1]);
 
       // Set state
       worksheetInfoDispatch({

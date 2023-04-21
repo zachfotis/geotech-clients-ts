@@ -5,6 +5,7 @@ import { Company, Project } from '../../types';
 import { getCompanies, getProjects } from '../../utils/common-functions';
 import Worksheet_ProjectInfo from './Worksheet_ProjectInfo';
 import Worksheet_WellConstruction from './Worksheet_WellConstruction';
+import Worksheet_WellFluids from './Worksheet_WellFluids';
 import Worksheet_WellLocation from './Worksheet_WellLocation';
 
 function Worksheet() {
@@ -121,10 +122,11 @@ function Worksheet() {
       {selectedProject?.id && (
         <>
           {/* WORKSHEET */}
-          <div className="w-full flex justify-start items-start flex-wrap gap-10">
+          <div className="w-full flex justify-start items-stretch flex-wrap gap-10">
             <Worksheet_ProjectInfo />
             <Worksheet_WellLocation />
             <Worksheet_WellConstruction />
+            <Worksheet_WellFluids />
           </div>
           <button className="btn btn-outline btn-success" onClick={handleSaveWorksheet}>
             Save Worksheet

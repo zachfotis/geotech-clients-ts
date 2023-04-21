@@ -59,6 +59,17 @@ export type Worksheet = {
       casingDepth: number;
     };
   };
+  wellFluids: {
+    completed: {
+      waterLevel: number;
+      waterCond: number;
+    };
+    planned: {
+      mudLevel: number;
+      mudCond: number;
+      waterCond: number;
+    };
+  };
 };
 
 type WorksheetActions =
@@ -90,7 +101,12 @@ type WorksheetActions =
   | { type: 'SET_WELL_CONSTRUCTION_COMPLETED_CASING_DEPTH'; payload: number }
   | { type: 'SET_WELL_CONSTRUCTION_PLANNED_DRILLING_DEPTH'; payload: number }
   | { type: 'SET_WELL_CONSTRUCTION_PLANNED_DRILLING_DIAMETER'; payload: string }
-  | { type: 'SET_WELL_CONSTRUCTION_PLANNED_CASING_DEPTH'; payload: number };
+  | { type: 'SET_WELL_CONSTRUCTION_PLANNED_CASING_DEPTH'; payload: number }
+  | { type: 'SET_WELL_FLUIDS_COMPLETED_WATER_LEVEL'; payload: number }
+  | { type: 'SET_WELL_FLUIDS_COMPLETED_WATER_COND'; payload: number }
+  | { type: 'SET_WELL_FLUIDS_PLANNED_MUD_LEVEL'; payload: number }
+  | { type: 'SET_WELL_FLUIDS_PLANNED_MUD_COND'; payload: number }
+  | { type: 'SET_WELL_FLUIDS_PLANNED_WATER_COND'; payload: number };
 
 export const createInitialState = (): Worksheet => {
   return {
@@ -139,6 +155,17 @@ export const createInitialState = (): Worksheet => {
         drillingDepth: 0,
         drillingDiameter: '',
         casingDepth: 0,
+      },
+    },
+    wellFluids: {
+      completed: {
+        waterLevel: 0,
+        waterCond: 0,
+      },
+      planned: {
+        mudLevel: 0,
+        mudCond: 0,
+        waterCond: 0,
       },
     },
   };
@@ -428,6 +455,61 @@ const reducer = (state: Worksheet, action: WorksheetActions) => {
           planned: {
             ...state.wellConstruction.planned,
             casingDepth: action.payload,
+          },
+        },
+      };
+    case 'SET_WELL_FLUIDS_COMPLETED_WATER_LEVEL':
+      return {
+        ...state,
+        wellFluids: {
+          ...state.wellFluids,
+          completed: {
+            ...state.wellFluids.completed,
+            waterLevel: action.payload,
+          },
+        },
+      };
+    case 'SET_WELL_FLUIDS_COMPLETED_WATER_COND':
+      return {
+        ...state,
+        wellFluids: {
+          ...state.wellFluids,
+          completed: {
+            ...state.wellFluids.completed,
+            waterCond: action.payload,
+          },
+        },
+      };
+    case 'SET_WELL_FLUIDS_PLANNED_MUD_LEVEL':
+      return {
+        ...state,
+        wellFluids: {
+          ...state.wellFluids,
+          planned: {
+            ...state.wellFluids.planned,
+            mudLevel: action.payload,
+          },
+        },
+      };
+    case 'SET_WELL_FLUIDS_PLANNED_MUD_COND':
+      return {
+        ...state,
+        wellFluids: {
+          ...state.wellFluids,
+          planned: {
+            ...state.wellFluids.planned,
+            mudCond: action.payload,
+          },
+        },
+      };
+    case 'SET_WELL_FLUIDS_PLANNED_WATER_COND':
+      return {
+        ...state,
+        wellFluids: {
+          ...state.wellFluids,
+          planned: {
+            ...state.wellFluids.planned,
+            waterCond: action.payload,
           },
         },
       };
