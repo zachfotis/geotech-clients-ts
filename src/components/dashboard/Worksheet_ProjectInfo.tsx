@@ -2,9 +2,9 @@ import { useWorksheetContext } from '../../context/auth/WorksheetContext';
 
 function Worksheet_ProjectInfo() {
   const { worksheetInfo, worksheetInfoDispatch } = useWorksheetContext();
-  const labelWidth = 'w-[150px]';
+  const labelWidth = 'min-w-[150px]';
   return (
-    <section className="w-[400px] flex flex-col justify-start items-start gap-3">
+    <section className="w-[450px] flex flex-col justify-start items-start gap-3 border p-3 rounded-md shadow-md">
       <h1 className="text-base font-bold mb-2">Στοιχεία Έργου:</h1>
       <div className="w-full flex justify-start items-center gap-5">
         <label className={`${labelWidth} label`} htmlFor="project_info_date">

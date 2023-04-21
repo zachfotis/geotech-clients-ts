@@ -4,6 +4,7 @@ import { useWorksheetContext } from '../../context/auth/WorksheetContext';
 import { Company, Project } from '../../types';
 import { getCompanies, getProjects } from '../../utils/common-functions';
 import Worksheet_ProjectInfo from './Worksheet_ProjectInfo';
+import Worksheet_WellConstruction from './Worksheet_WellConstruction';
 import Worksheet_WellLocation from './Worksheet_WellLocation';
 
 function Worksheet() {
@@ -57,7 +58,7 @@ function Worksheet() {
     <section className="w-full flex flex-col justify-start items-start flex-wrap gap-10 p-5">
       <h1 className="text-xl font-bold">Add Worksheet to Project</h1>
       {/* SELECTIONS */}
-      <div className="flex justify-start items-center gap-10">
+      <div className="flex justify-start items-center gap-10 flex-wrap">
         {/* Select company */}
         <div>
           <label className="label" htmlFor="company-select">
@@ -120,9 +121,10 @@ function Worksheet() {
       {selectedProject?.id && (
         <>
           {/* WORKSHEET */}
-          <div className="w-full flex justify-start items-start flex-wrap gap-20">
+          <div className="w-full flex justify-start items-start flex-wrap gap-10">
             <Worksheet_ProjectInfo />
             <Worksheet_WellLocation />
+            <Worksheet_WellConstruction />
           </div>
           <button className="btn btn-outline btn-success" onClick={handleSaveWorksheet}>
             Save Worksheet

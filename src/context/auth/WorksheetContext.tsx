@@ -47,6 +47,18 @@ export type Worksheet = {
     };
     altitude: number;
   };
+  wellConstruction: {
+    completed: {
+      tubingDepth: number;
+      tubingDiameter: string;
+      casingDepth: number;
+    };
+    planned: {
+      drillingDepth: number;
+      drillingDiameter: string;
+      casingDepth: number;
+    };
+  };
 };
 
 type WorksheetActions =
@@ -72,7 +84,13 @@ type WorksheetActions =
   | { type: 'SET_WELL_LOCATION_COORDINATES_WGS84_L_SECONDS'; payload: number }
   | { type: 'SET_WELL_LOCATION_COORDINATES_EGSA87_Y'; payload: number }
   | { type: 'SET_WELL_LOCATION_COORDINATES_EGSA87_X'; payload: number }
-  | { type: 'SET_WELL_LOCATION_ALTITUDE'; payload: number };
+  | { type: 'SET_WELL_LOCATION_ALTITUDE'; payload: number }
+  | { type: 'SET_WELL_CONSTRUCTION_COMPLETED_TUBING_DEPTH'; payload: number }
+  | { type: 'SET_WELL_CONSTRUCTION_COMPLETED_TUBING_DIAMETER'; payload: string }
+  | { type: 'SET_WELL_CONSTRUCTION_COMPLETED_CASING_DEPTH'; payload: number }
+  | { type: 'SET_WELL_CONSTRUCTION_PLANNED_DRILLING_DEPTH'; payload: number }
+  | { type: 'SET_WELL_CONSTRUCTION_PLANNED_DRILLING_DIAMETER'; payload: string }
+  | { type: 'SET_WELL_CONSTRUCTION_PLANNED_CASING_DEPTH'; payload: number };
 
 export const createInitialState = (): Worksheet => {
   return {
@@ -110,6 +128,18 @@ export const createInitialState = (): Worksheet => {
         x: 0,
       },
       altitude: 0,
+    },
+    wellConstruction: {
+      completed: {
+        tubingDepth: 0,
+        tubingDiameter: '',
+        casingDepth: 0,
+      },
+      planned: {
+        drillingDepth: 0,
+        drillingDiameter: '',
+        casingDepth: 0,
+      },
     },
   };
 };
@@ -333,6 +363,72 @@ const reducer = (state: Worksheet, action: WorksheetActions) => {
         wellLocation: {
           ...state.wellLocation,
           altitude: action.payload,
+        },
+      };
+    case 'SET_WELL_CONSTRUCTION_COMPLETED_TUBING_DEPTH':
+      return {
+        ...state,
+        wellConstruction: {
+          ...state.wellConstruction,
+          completed: {
+            ...state.wellConstruction.completed,
+            tubingDepth: action.payload,
+          },
+        },
+      };
+    case 'SET_WELL_CONSTRUCTION_COMPLETED_TUBING_DIAMETER':
+      return {
+        ...state,
+        wellConstruction: {
+          ...state.wellConstruction,
+          completed: {
+            ...state.wellConstruction.completed,
+            tubingDiameter: action.payload,
+          },
+        },
+      };
+    case 'SET_WELL_CONSTRUCTION_COMPLETED_CASING_DEPTH':
+      return {
+        ...state,
+        wellConstruction: {
+          ...state.wellConstruction,
+          completed: {
+            ...state.wellConstruction.completed,
+            casingDepth: action.payload,
+          },
+        },
+      };
+    case 'SET_WELL_CONSTRUCTION_PLANNED_DRILLING_DEPTH':
+      return {
+        ...state,
+        wellConstruction: {
+          ...state.wellConstruction,
+          planned: {
+            ...state.wellConstruction.planned,
+            drillingDepth: action.payload,
+          },
+        },
+      };
+    case 'SET_WELL_CONSTRUCTION_PLANNED_DRILLING_DIAMETER':
+      return {
+        ...state,
+        wellConstruction: {
+          ...state.wellConstruction,
+          planned: {
+            ...state.wellConstruction.planned,
+            drillingDiameter: action.payload,
+          },
+        },
+      };
+    case 'SET_WELL_CONSTRUCTION_PLANNED_CASING_DEPTH':
+      return {
+        ...state,
+        wellConstruction: {
+          ...state.wellConstruction,
+          planned: {
+            ...state.wellConstruction.planned,
+            casingDepth: action.payload,
+          },
         },
       };
     default:
