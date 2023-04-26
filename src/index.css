@@ -1184,3 +1184,7 @@ nav .top-menu {
     max-width: 100%;
   }
 }
+
+.leaflet-control-attribution.leaflet-control {
+  display: none;
+}

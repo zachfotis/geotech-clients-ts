@@ -13,7 +13,6 @@ function Dashboard() {
   const { user, loggedIn } = useContext(FirebaseContext);
   const [isServerConnecting, setIsServerConnecting] = useState(false);
   const [isServerConnected, setIsServerConnected] = useState(false);
-  const [currentTime, setCurrentTime] = useState(new Date());
 
   // Wake up server
   useEffect(() => {
@@ -35,15 +34,6 @@ function Dashboard() {
     };
 
     getGeotechServerStatus();
-  }, []);
-
-  // Update time every second
-  useEffect(() => {
-    const updateTime = () => {
-      setCurrentTime(new Date());
-    };
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
   }, []);
 
   // Apply style to active tab
@@ -77,10 +67,7 @@ function Dashboard() {
               />
             )}
           </div>
-          <div className="current-time">
-            <p>Current Time: </p>
-            <p>{currentTime.toLocaleTimeString()}</p>
-          </div>
+          <Time />
         </div>
       </nav>
       <div className="tabs ml-2">
@@ -119,3 +106,23 @@ function Dashboard() {
   );
 }
 export default Dashboard;
+
+function Time() {
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  // Update time every second
+  useEffect(() => {
+    const updateTime = () => {
+      setCurrentTime(new Date());
+    };
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="current-time">
+      <p>Current Time: </p>
+      <p>{currentTime.toLocaleTimeString()}</p>
+    </div>
+  );
+}

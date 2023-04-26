@@ -1,7 +1,6 @@
 import { SiConvertio } from 'react-icons/si';
 import dataImport from '../../assets/data.json';
 import { useWorksheetContext } from '../../context/auth/WorksheetContext';
-import { convertEGSA87toWGS84, convertWGS84toEGSA87 } from '../../utils/converter';
 
 type DataType = {
   [key: string]: {
@@ -10,103 +9,11 @@ type DataType = {
 };
 
 function Worksheet_WellLocation() {
-  const { worksheetInfo, worksheetInfoDispatch } = useWorksheetContext();
+  const { worksheetInfo, worksheetInfoDispatch, handleEGSA87toWGS84, handleWGS84toEGSA87 } = useWorksheetContext();
 
   const data: DataType = dataImport;
 
   const labelWidth = 'min-w-[150px]';
-
-  const handleWGS84toEGSA87 = () => {
-    if (
-      worksheetInfo.wellLocation.coordinatesWGS84.f.degrees &&
-      worksheetInfo.wellLocation.coordinatesWGS84.f.minutes &&
-      worksheetInfo.wellLocation.coordinatesWGS84.f.seconds &&
-      worksheetInfo.wellLocation.coordinatesWGS84.l.degrees &&
-      worksheetInfo.wellLocation.coordinatesWGS84.l.minutes &&
-      worksheetInfo.wellLocation.coordinatesWGS84.l.seconds
-    ) {
-      // Convert to decimal degrees
-      const f =
-        worksheetInfo.wellLocation.coordinatesWGS84.f.degrees +
-        worksheetInfo.wellLocation.coordinatesWGS84.f.minutes / 60 +
-        worksheetInfo.wellLocation.coordinatesWGS84.f.seconds / 3600;
-      const l =
-        worksheetInfo.wellLocation.coordinatesWGS84.l.degrees +
-        worksheetInfo.wellLocation.coordinatesWGS84.l.minutes / 60 +
-        worksheetInfo.wellLocation.coordinatesWGS84.l.seconds / 3600;
-
-      // Convert to EGSA87
-      const result = convertWGS84toEGSA87(f, l);
-
-      // round to whole numbers
-      const x = Math.round(result[0]);
-      const y = Math.round(result[1]);
-
-      // Set state
-      worksheetInfoDispatch({
-        type: 'SET_WELL_LOCATION_COORDINATES_EGSA87_Y',
-        payload: y,
-      });
-
-      worksheetInfoDispatch({
-        type: 'SET_WELL_LOCATION_COORDINATES_EGSA87_X',
-        payload: x,
-      });
-    }
-  };
-
-  const handleEGSA87toWGS84 = () => {
-    if (worksheetInfo.wellLocation.coordinatesEGSA87.x && worksheetInfo.wellLocation.coordinatesEGSA87.y) {
-      // Convert to WGS84
-      const result = convertEGSA87toWGS84(
-        worksheetInfo.wellLocation.coordinatesEGSA87.x,
-        worksheetInfo.wellLocation.coordinatesEGSA87.y
-      );
-
-      const l = result[0];
-      const f = result[1];
-
-      // Convert to degrees, minutes, seconds
-      const fDegrees = Math.floor(f);
-      const fMinutes = Math.floor((f - fDegrees) * 60);
-      const fSeconds = Math.round(((f - fDegrees) * 60 - fMinutes) * 60 * 10) / 10; // round to 1 decimal
-
-      const lDegrees = Math.floor(l);
-      const lMinutes = Math.floor((l - lDegrees) * 60);
-      const lSeconds = Math.round(((l - lDegrees) * 60 - lMinutes) * 60 * 10) / 10; // round to 1 decimal
-
-      // Set state
-      worksheetInfoDispatch({
-        type: 'SET_WELL_LOCATION_COORDINATES_WGS84_F_DEGREES',
-        payload: fDegrees,
-      });
-
-      worksheetInfoDispatch({
-        type: 'SET_WELL_LOCATION_COORDINATES_WGS84_F_MINUTES',
-        payload: fMinutes,
-      });
-
-      worksheetInfoDispatch({
-        type: 'SET_WELL_LOCATION_COORDINATES_WGS84_F_SECONDS',
-        payload: fSeconds,
-      });
-
-      worksheetInfoDispatch({
-        type: 'SET_WELL_LOCATION_COORDINATES_WGS84_L_DEGREES',
-        payload: lDegrees,
-      });
-
-      worksheetInfoDispatch({
-        type: 'SET_WELL_LOCATION_COORDINATES_WGS84_L_MINUTES',
-        payload: lMinutes,
-      });
-
-      worksheetInfoDispatch({
-        type: 'SET_WELL_LOCATION_COORDINATES_WGS84_L_SECONDS',
-        payload: lSeconds,
-      });
-    }
-  };
 
   return (
     <section className="w-[450px] flex flex-col justify-start items-start gap-3 border p-3 rounded-md shadow-md">

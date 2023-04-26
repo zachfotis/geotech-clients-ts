@@ -3,6 +3,7 @@ import { useFirebase } from '../../context/auth/FirebaseContext';
 import { useWorksheetContext } from '../../context/auth/WorksheetContext';
 import { Company, Project } from '../../types';
 import { getCompanies, getProjects } from '../../utils/common-functions';
+import Worksheet_Map from './Worksheet_Map';
 import Worksheet_ProjectInfo from './Worksheet_ProjectInfo';
 import Worksheet_WellConstruction from './Worksheet_WellConstruction';
 import Worksheet_WellFluids from './Worksheet_WellFluids';
@@ -125,6 +126,7 @@ function Worksheet() {
           <div className="w-full flex justify-start items-stretch flex-wrap gap-10">
             <Worksheet_ProjectInfo />
             <Worksheet_WellLocation />
+            <Worksheet_Map />
             <Worksheet_WellConstruction />
             <Worksheet_WellFluids />
           </div>

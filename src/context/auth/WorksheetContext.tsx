@@ -2,6 +2,7 @@ import { Timestamp, collection, doc, getDocs, getFirestore, query, setDoc, where
 import { createContext, useContext, useReducer } from 'react';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
+import { convertEGSA87toWGS84, convertWGS84toEGSA87 } from '../../utils/converter';
 import { useFirebase } from './FirebaseContext';
 
 type WorksheetContextType = {
@@ -9,6 +10,8 @@ type WorksheetContextType = {
   worksheetInfoDispatch: React.Dispatch<WorksheetActions>;
   fetchWorksheetFromDB: (projectIDstring: number) => void;
   saveWorksheetToDB: () => void;
+  handleWGS84toEGSA87: () => void;
+  handleEGSA87toWGS84: () => void;
 };
 
 export type Worksheet = {
@@ -176,6 +179,8 @@ const WorksheetContext = createContext<WorksheetContextType>({
   worksheetInfoDispatch: () => null,
   fetchWorksheetFromDB: () => null,
   saveWorksheetToDB: () => null,
+  handleWGS84toEGSA87: () => null,
+  handleEGSA87toWGS84: () => null,
 });
 
 export const useWorksheetContext = () => {
@@ -577,6 +582,98 @@ export const WorksheetProvider = ({ children }: { children: React.ReactNode }) =
     }
   };
 
+  const handleWGS84toEGSA87 = () => {
+    if (
+      worksheetInfo.wellLocation.coordinatesWGS84.f.degrees &&
+      worksheetInfo.wellLocation.coordinatesWGS84.f.minutes &&
+      worksheetInfo.wellLocation.coordinatesWGS84.f.seconds &&
+      worksheetInfo.wellLocation.coordinatesWGS84.l.degrees &&
+      worksheetInfo.wellLocation.coordinatesWGS84.l.minutes &&
+      worksheetInfo.wellLocation.coordinatesWGS84.l.seconds
+    ) {
+      // Convert to decimal degrees
+      const f =
+        worksheetInfo.wellLocation.coordinatesWGS84.f.degrees +
+        worksheetInfo.wellLocation.coordinatesWGS84.f.minutes / 60 +
+        worksheetInfo.wellLocation.coordinatesWGS84.f.seconds / 3600;
+      const l =
+        worksheetInfo.wellLocation.coordinatesWGS84.l.degrees +
+        worksheetInfo.wellLocation.coordinatesWGS84.l.minutes / 60 +
+        worksheetInfo.wellLocation.coordinatesWGS84.l.seconds / 3600;
+
+      // Convert to EGSA87
+      const result = convertWGS84toEGSA87(f, l);
+
+      // round to whole numbers
+      const x = Math.round(result[0]);
+      const y = Math.round(result[1]);
+
+      // Set state
+      worksheetInfoDispatch({
+        type: 'SET_WELL_LOCATION_COORDINATES_EGSA87_Y',
+        payload: y,
+      });
+
+      worksheetInfoDispatch({
+        type: 'SET_WELL_LOCATION_COORDINATES_EGSA87_X',
+        payload: x,
+      });
+    }
+  };
+
+  const handleEGSA87toWGS84 = () => {
+    if (worksheetInfo.wellLocation.coordinatesEGSA87.x && worksheetInfo.wellLocation.coordinatesEGSA87.y) {
+      // Convert to WGS84
+      const result = convertEGSA87toWGS84(
+        worksheetInfo.wellLocation.coordinatesEGSA87.x,
+        worksheetInfo.wellLocation.coordinatesEGSA87.y
+      );
+
+      const l = result[0];
+      const f = result[1];
+
+      // Convert to degrees, minutes, seconds
+      const fDegrees = Math.floor(f);
+      const fMinutes = Math.floor((f - fDegrees) * 60);
+      const fSeconds = Math.round(((f - fDegrees) * 60 - fMinutes) * 60 * 10) / 10; // round to 1 decimal
+
+      const lDegrees = Math.floor(l);
+      const lMinutes = Math.floor((l - lDegrees) * 60);
+      const lSeconds = Math.round(((l - lDegrees) * 60 - lMinutes) * 60 * 10) / 10; // round to 1 decimal
+
+      // Set state
+      worksheetInfoDispatch({
+        type: 'SET_WELL_LOCATION_COORDINATES_WGS84_F_DEGREES',
+        payload: fDegrees,
+      });
+
+      worksheetInfoDispatch({
+        type: 'SET_WELL_LOCATION_COORDINATES_WGS84_F_MINUTES',
+        payload: fMinutes,
+      });
+
+      worksheetInfoDispatch({
+        type: 'SET_WELL_LOCATION_COORDINATES_WGS84_F_SECONDS',
+        payload: fSeconds,
+      });
+
+      worksheetInfoDispatch({
+        type: 'SET_WELL_LOCATION_COORDINATES_WGS84_L_DEGREES',
+        payload: lDegrees,
+      });
+
+      worksheetInfoDispatch({
+        type: 'SET_WELL_LOCATION_COORDINATES_WGS84_L_MINUTES',
+        payload: lMinutes,
+      });
+
+      worksheetInfoDispatch({
+        type: 'SET_WELL_LOCATION_COORDINATES_WGS84_L_SECONDS',
+        payload: lSeconds,
+      });
+    }
+  };
+
   return (
     <WorksheetContext.Provider
       value={{
@@ -584,6 +681,8 @@ export const WorksheetProvider = ({ children }: { children: React.ReactNode }) =
         worksheetInfoDispatch,
         fetchWorksheetFromDB,
         saveWorksheetToDB,
+        handleWGS84toEGSA87,
+        handleEGSA87toWGS84,
       }}
     >
       {children}
