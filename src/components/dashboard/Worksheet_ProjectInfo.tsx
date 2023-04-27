@@ -36,6 +36,7 @@ function Worksheet_ProjectInfo() {
           className="w-full input input-bordered input-sm"
           id="project_info_client"
           type="text"
+          placeholder="Επωνυμία ή Όνομα Πελάτη"
           value={worksheetInfo?.projectInfo?.client || ''}
           required
           onChange={(e) => {
@@ -54,6 +55,7 @@ function Worksheet_ProjectInfo() {
           className="w-full input input-bordered input-sm"
           id="project_info_project"
           type="text"
+          placeholder="Τίτλος Έργου"
           value={worksheetInfo?.projectInfo?.project || ''}
           required
           onChange={(e) => {
@@ -72,6 +74,7 @@ function Worksheet_ProjectInfo() {
           className="w-full input input-bordered input-sm"
           id="project_info_project_manager"
           type="text"
+          placeholder="Επωνυμία ή Όνομα Αναδόχου"
           value={worksheetInfo?.projectInfo?.projectManager || ''}
           required
           onChange={(e) => {
@@ -90,6 +93,7 @@ function Worksheet_ProjectInfo() {
           className="w-full input input-bordered input-sm"
           id="project_info_charge"
           type="text"
+          placeholder="Επωνυμία ή Όνομα"
           value={worksheetInfo?.projectInfo?.charge || ''}
           required
           onChange={(e) => {
@@ -108,6 +112,7 @@ function Worksheet_ProjectInfo() {
           className="w-full input input-bordered input-sm"
           id="project_info_rig_company"
           type="text"
+          placeholder="Επωνυμία ή Όνομα Εταιρίας"
           value={worksheetInfo?.projectInfo?.rigCompany || ''}
           required
           onChange={(e) => {

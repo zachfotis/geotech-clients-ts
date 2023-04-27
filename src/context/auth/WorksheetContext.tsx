@@ -83,6 +83,22 @@ export type Worksheet = {
     filename: string;
     responsible: string;
   };
+  mobileUnit: {
+    vehicle: string;
+    generator: string;
+    drum: string;
+    crew: string[];
+    departure: Date;
+    arrival: Date;
+    start: Date;
+    end: Date;
+    overnight: boolean;
+  };
+  contactInfo: {
+    client: string;
+    contractor: string;
+    operator: string;
+  };
 };
 
 type WorksheetActions =
@@ -124,7 +140,19 @@ type WorksheetActions =
   | { type: 'SET_WELL_LOGGING_PROBE'; payload: string }
   | { type: 'SET_WELL_LOGGING_DEPTH'; payload: number }
   | { type: 'SET_WELL_LOGGING_FILENAME'; payload: string }
-  | { type: 'SET_WELL_LOGGING_RESPONSIBLE'; payload: string };
+  | { type: 'SET_WELL_LOGGING_RESPONSIBLE'; payload: string }
+  | { type: 'SET_MOBILE_UNIT_VEHICLE'; payload: string }
+  | { type: 'SET_MOBILE_UNIT_GENERATOR'; payload: string }
+  | { type: 'SET_MOBILE_UNIT_DRUM'; payload: string }
+  | { type: 'SET_MOBILE_UNIT_CREW'; payload: string[] }
+  | { type: 'SET_MOBILE_UNIT_DEPARTURE'; payload: Date }
+  | { type: 'SET_MOBILE_UNIT_ARRIVAL'; payload: Date }
+  | { type: 'SET_MOBILE_UNIT_START'; payload: Date }
+  | { type: 'SET_MOBILE_UNIT_END'; payload: Date }
+  | { type: 'SET_MOBILE_UNIT_OVERNIGHT'; payload: boolean }
+  | { type: 'SET_CONTACT_INFO_CLIENT'; payload: string }
+  | { type: 'SET_CONTACT_INFO_CONTRACTOR'; payload: string }
+  | { type: 'SET_CONTACT_INFO_OPERATOR'; payload: string };
 
 export const createInitialState = (): Worksheet => {
   return {
@@ -192,6 +220,22 @@ export const createInitialState = (): Worksheet => {
       depth: 0,
       filename: '',
       responsible: '',
+    },
+    mobileUnit: {
+      vehicle: 'Mercedes',
+      generator: '',
+      drum: '',
+      crew: [],
+      departure: new Date(),
+      arrival: new Date(),
+      start: new Date(),
+      end: new Date(),
+      overnight: false,
+    },
+    contactInfo: {
+      client: '',
+      contractor: '',
+      operator: '',
     },
   };
 };
@@ -587,6 +631,102 @@ const reducer = (state: Worksheet, action: WorksheetActions) => {
           responsible: action.payload,
         },
       };
+    case 'SET_MOBILE_UNIT_VEHICLE':
+      return {
+        ...state,
+        mobileUnit: {
+          ...state.mobileUnit,
+          vehicle: action.payload,
+        },
+      };
+    case 'SET_MOBILE_UNIT_GENERATOR':
+      return {
+        ...state,
+        mobileUnit: {
+          ...state.mobileUnit,
+          generator: action.payload,
+        },
+      };
+    case 'SET_MOBILE_UNIT_DRUM':
+      return {
+        ...state,
+        mobileUnit: {
+          ...state.mobileUnit,
+          drum: action.payload,
+        },
+      };
+    case 'SET_MOBILE_UNIT_CREW':
+      return {
+        ...state,
+        mobileUnit: {
+          ...state.mobileUnit,
+          crew: action.payload,
+        },
+      };
+    case 'SET_MOBILE_UNIT_DEPARTURE':
+      return {
+        ...state,
+        mobileUnit: {
+          ...state.mobileUnit,
+          departure: action.payload,
+        },
+      };
+    case 'SET_MOBILE_UNIT_ARRIVAL':
+      return {
+        ...state,
+        mobileUnit: {
+          ...state.mobileUnit,
+          arrival: action.payload,
+        },
+      };
+    case 'SET_MOBILE_UNIT_START':
+      return {
+        ...state,
+        mobileUnit: {
+          ...state.mobileUnit,
+          start: action.payload,
+        },
+      };
+    case 'SET_MOBILE_UNIT_END':
+      return {
+        ...state,
+        mobileUnit: {
+          ...state.mobileUnit,
+          end: action.payload,
+        },
+      };
+    case 'SET_MOBILE_UNIT_OVERNIGHT':
+      return {
+        ...state,
+        mobileUnit: {
+          ...state.mobileUnit,
+          overnight: action.payload,
+        },
+      };
+    case 'SET_CONTACT_INFO_CLIENT':
+      return {
+        ...state,
+        contactInfo: {
+          ...state.contactInfo,
+          client: action.payload,
+        },
+      };
+    case 'SET_CONTACT_INFO_CONTRACTOR':
+      return {
+        ...state,
+        contactInfo: {
+          ...state.contactInfo,
+          contractor: action.payload,
+        },
+      };
+    case 'SET_CONTACT_INFO_OPERATOR':
+      return {
+        ...state,
+        contactInfo: {
+          ...state.contactInfo,
+          operator: action.payload,
+        },
+      };
     default:
       return state;
   }
@@ -639,6 +779,19 @@ export const WorksheetProvider = ({ children }: { children: React.ReactNode }) =
                 new Timestamp(data[0].projectInfo.date.seconds, data[0].projectInfo.date.nanoseconds).toDate()
               ),
             },
+            mobileUnit: {
+              ...data[0].mobileUnit,
+              departure: new Date(
+                new Timestamp(data[0].mobileUnit.departure.seconds, data[0].mobileUnit.departure.nanoseconds).toDate()
+              ),
+              arrival: new Date(
+                new Timestamp(data[0].mobileUnit.arrival.seconds, data[0].mobileUnit.arrival.nanoseconds).toDate()
+              ),
+              start: new Date(
+                new Timestamp(data[0].mobileUnit.start.seconds, data[0].mobileUnit.start.nanoseconds).toDate()
+              ),
+              end: new Date(new Timestamp(data[0].mobileUnit.end.seconds, data[0].mobileUnit.end.nanoseconds).toDate()),
+            },
           } as Worksheet,
         });
       } else {
@@ -664,8 +817,11 @@ export const WorksheetProvider = ({ children }: { children: React.ReactNode }) =
       const db = getFirestore();
       const docRef = doc(db, 'worksheets', worksheetInfo.id);
       await setDoc(docRef, worksheetInfo);
-    } catch (error) {
-      console.log(error);
+      toast.success('Worksheet saved successfully');
+    } catch (error: any) {
+      if (error.hasOwnProperty('message')) {
+        toast.error(error.message);
+      }
     } finally {
       setLoading(false);
     }

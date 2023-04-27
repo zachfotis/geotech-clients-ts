@@ -10,7 +10,7 @@ function Worksheet_WellLogging() {
       <h1 className="text-base font-bold mb-2">Στοιχεία Γεωφυσικής Καταγραφής</h1>
       <div className="w-full flex justify-start items-center gap-5">
         <label className={`${labelWidth} label`} htmlFor="well-logging-type">
-          <span className="label-text">S/N Φωρατή:</span>
+          <span className="label-text">Τύπος Καταγραφής:</span>
         </label>
         <select
           className="w-full input input-bordered input-sm"

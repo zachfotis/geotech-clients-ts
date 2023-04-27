@@ -27,10 +27,17 @@ function Worksheet_WellLocation() {
           id="well-pe"
           value={worksheetInfo.wellLocation.pe || 'default'}
           onChange={(e) => {
-            // setSelectedPE(e.target.value);
             worksheetInfoDispatch({
               type: 'SET_WELL_LOCATION_PE',
               payload: e.target.value,
+            });
+            worksheetInfoDispatch({
+              type: 'SET_WELL_LOCATION_MUNICIPALITY',
+              payload: '',
+            });
+            worksheetInfoDispatch({
+              type: 'SET_WELL_LOCATION_DKTK',
+              payload: '',
             });
           }}
         >
@@ -59,6 +66,10 @@ function Worksheet_WellLocation() {
             worksheetInfoDispatch({
               type: 'SET_WELL_LOCATION_MUNICIPALITY',
               payload: e.target.value,
+            });
+            worksheetInfoDispatch({
+              type: 'SET_WELL_LOCATION_DKTK',
+              payload: '',
             });
           }}
         >
@@ -114,6 +125,7 @@ function Worksheet_WellLocation() {
           className="w-full input input-bordered input-sm"
           id="well-position"
           type="text"
+          placeholder="Θέση"
           value={worksheetInfo?.wellLocation?.position || ''}
           required
           onChange={(e) => {
@@ -177,15 +189,11 @@ function Worksheet_WellLocation() {
             W.G.S. 84 (λ):
             <SiConvertio
               className={`text-lg ml-auto ${
-                worksheetInfo.wellLocation.coordinatesWGS84.f.degrees &&
-                worksheetInfo.wellLocation.coordinatesWGS84.f.minutes &&
-                worksheetInfo.wellLocation.coordinatesWGS84.f.seconds &&
-                worksheetInfo.wellLocation.coordinatesWGS84.l.degrees &&
-                worksheetInfo.wellLocation.coordinatesWGS84.l.minutes &&
-                worksheetInfo.wellLocation.coordinatesWGS84.l.seconds &&
+                worksheetInfo.wellLocation.coordinatesEGSA87.y &&
+                worksheetInfo.wellLocation.coordinatesEGSA87.x &&
                 'text-green-500 cursor-pointer hover:scale-110 transition-all duration-300 ease-in-out'
               }`}
-              onClick={handleWGS84toEGSA87}
+              onClick={handleEGSA87toWGS84}
             />
           </span>
         </label>
@@ -238,11 +246,15 @@ function Worksheet_WellLocation() {
             Ε.Γ.Σ.Α. 87 (Y, X):
             <SiConvertio
               className={`text-lg ml-auto ${
-                worksheetInfo.wellLocation.coordinatesEGSA87.y &&
-                worksheetInfo.wellLocation.coordinatesEGSA87.x &&
+                worksheetInfo.wellLocation.coordinatesWGS84.f.degrees &&
+                worksheetInfo.wellLocation.coordinatesWGS84.f.minutes &&
+                worksheetInfo.wellLocation.coordinatesWGS84.f.seconds &&
+                worksheetInfo.wellLocation.coordinatesWGS84.l.degrees &&
+                worksheetInfo.wellLocation.coordinatesWGS84.l.minutes &&
+                worksheetInfo.wellLocation.coordinatesWGS84.l.seconds &&
                 'text-green-500 cursor-pointer hover:scale-110 transition-all duration-300 ease-in-out'
               }`}
-              onClick={handleEGSA87toWGS84}
+              onClick={handleWGS84toEGSA87}
             />
           </span>
         </label>
