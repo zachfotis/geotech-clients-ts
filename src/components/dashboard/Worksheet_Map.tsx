@@ -141,7 +141,6 @@ function Worksheet_Map() {
             id="company-select"
             value={userMapType}
             onChange={(e) => {
-              // Check if e.target.value is a valid map type
               if (e.target.value in MapEnum) {
                 const mapType = e.target.value as keyof typeof MapEnum;
                 setUserMapType(mapType);

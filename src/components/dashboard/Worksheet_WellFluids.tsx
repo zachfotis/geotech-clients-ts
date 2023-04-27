@@ -5,7 +5,7 @@ function Worksheet_WellFluids() {
   const labelWidth = 'min-w-[170px]';
   return (
     <section className="w-[450px] flex flex-col justify-start items-start gap-3 border p-3 rounded-md shadow-md">
-      <h1 className="text-base font-bold mb-2">Δεδομένα Ρευστών Γεώτρησης:</h1>
+      <h1 className="text-base font-bold mb-2">Δεδομένα Ρευστών Γεώτρησης</h1>
       <p className="text-sm font-bold">Σωληνωμένη:</p>
       <div className="w-full flex justify-start items-center gap-5">
         <label className={`${labelWidth} label`} htmlFor="well-fluids-completed-water-level">

@@ -1,7 +1,8 @@
 import { Timestamp, collection, doc, getDocs, getFirestore, query, setDoc, where } from 'firebase/firestore';
-import { createContext, useContext, useReducer } from 'react';
+import { createContext, useContext, useEffect, useReducer, useState } from 'react';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
+import { InventoryData, UserType, getEmployees, getInventory } from '../../utils/common-functions';
 import { convertEGSA87toWGS84, convertWGS84toEGSA87 } from '../../utils/converter';
 import { useFirebase } from './FirebaseContext';
 
@@ -12,6 +13,8 @@ type WorksheetContextType = {
   saveWorksheetToDB: () => void;
   handleWGS84toEGSA87: () => void;
   handleEGSA87toWGS84: () => void;
+  inventoryData: InventoryData;
+  employees: UserType[];
 };
 
 export type Worksheet = {
@@ -73,6 +76,13 @@ export type Worksheet = {
       waterCond: number;
     };
   };
+  wellLogging: {
+    type: string;
+    probe: string;
+    depth: number;
+    filename: string;
+    responsible: string;
+  };
 };
 
 type WorksheetActions =
@@ -109,7 +119,12 @@ type WorksheetActions =
   | { type: 'SET_WELL_FLUIDS_COMPLETED_WATER_COND'; payload: number }
   | { type: 'SET_WELL_FLUIDS_PLANNED_MUD_LEVEL'; payload: number }
   | { type: 'SET_WELL_FLUIDS_PLANNED_MUD_COND'; payload: number }
-  | { type: 'SET_WELL_FLUIDS_PLANNED_WATER_COND'; payload: number };
+  | { type: 'SET_WELL_FLUIDS_PLANNED_WATER_COND'; payload: number }
+  | { type: 'SET_WELL_LOGGING_TYPE'; payload: string }
+  | { type: 'SET_WELL_LOGGING_PROBE'; payload: string }
+  | { type: 'SET_WELL_LOGGING_DEPTH'; payload: number }
+  | { type: 'SET_WELL_LOGGING_FILENAME'; payload: string }
+  | { type: 'SET_WELL_LOGGING_RESPONSIBLE'; payload: string };
 
 export const createInitialState = (): Worksheet => {
   return {
@@ -171,6 +186,13 @@ export const createInitialState = (): Worksheet => {
         waterCond: 0,
       },
     },
+    wellLogging: {
+      type: '',
+      probe: '',
+      depth: 0,
+      filename: '',
+      responsible: '',
+    },
   };
 };
 
@@ -181,6 +203,13 @@ const WorksheetContext = createContext<WorksheetContextType>({
   saveWorksheetToDB: () => null,
   handleWGS84toEGSA87: () => null,
   handleEGSA87toWGS84: () => null,
+  inventoryData: {
+    drums: [],
+    generators: [],
+    probes: [],
+    loggingType: [],
+  },
+  employees: [],
 });
 
 export const useWorksheetContext = () => {
@@ -518,6 +547,46 @@ const reducer = (state: Worksheet, action: WorksheetActions) => {
           },
         },
       };
+    case 'SET_WELL_LOGGING_TYPE':
+      return {
+        ...state,
+        wellLogging: {
+          ...state.wellLogging,
+          type: action.payload,
+        },
+      };
+    case 'SET_WELL_LOGGING_PROBE':
+      return {
+        ...state,
+        wellLogging: {
+          ...state.wellLogging,
+          probe: action.payload,
+        },
+      };
+    case 'SET_WELL_LOGGING_DEPTH':
+      return {
+        ...state,
+        wellLogging: {
+          ...state.wellLogging,
+          depth: action.payload,
+        },
+      };
+    case 'SET_WELL_LOGGING_FILENAME':
+      return {
+        ...state,
+        wellLogging: {
+          ...state.wellLogging,
+          filename: action.payload,
+        },
+      };
+    case 'SET_WELL_LOGGING_RESPONSIBLE':
+      return {
+        ...state,
+        wellLogging: {
+          ...state.wellLogging,
+          responsible: action.payload,
+        },
+      };
     default:
       return state;
   }
@@ -525,7 +594,27 @@ const reducer = (state: Worksheet, action: WorksheetActions) => {
 
 export const WorksheetProvider = ({ children }: { children: React.ReactNode }) => {
   const [worksheetInfo, worksheetInfoDispatch] = useReducer(reducer, createInitialState());
+  const [inventoryData, setInventoryData] = useState<InventoryData>({
+    drums: [],
+    generators: [],
+    probes: [],
+    loggingType: [],
+  });
+  const [employees, setEmployees] = useState<UserType[]>([]);
   const { setLoading } = useFirebase();
+
+  useEffect(() => {
+    const fetchInventoryData = async () => {
+      await getInventory(setLoading, setInventoryData);
+    };
+
+    const fetchEmployees = async () => {
+      await getEmployees(setLoading, setEmployees);
+    };
+
+    fetchInventoryData();
+    fetchEmployees();
+  }, []);
 
   const fetchWorksheetFromDB = async (projectID: number) => {
     worksheetInfoDispatch({ type: 'RESET_WORKSHEET' });
@@ -683,6 +772,8 @@ export const WorksheetProvider = ({ children }: { children: React.ReactNode }) =
         saveWorksheetToDB,
         handleWGS84toEGSA87,
         handleEGSA87toWGS84,
+        inventoryData,
+        employees,
       }}
     >
       {children}

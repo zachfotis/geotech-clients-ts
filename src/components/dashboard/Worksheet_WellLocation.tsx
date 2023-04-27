@@ -17,7 +17,7 @@ function Worksheet_WellLocation() {
 
   return (
     <section className="w-[450px] flex flex-col justify-start items-start gap-3 border p-3 rounded-md shadow-md">
-      <h1 className="text-base font-bold mb-2">Τοπογραφικά Στοιχεία Γεώτρησης:</h1>
+      <h1 className="text-base font-bold mb-2">Τοπογραφικά Στοιχεία Γεώτρησης</h1>
       <div className="w-full flex justify-start items-center gap-5">
         <label className={`${labelWidth} label`} htmlFor="well-pe">
           <span className="label-text">Π.Ε.:</span>

@@ -8,6 +8,7 @@ import Worksheet_ProjectInfo from './Worksheet_ProjectInfo';
 import Worksheet_WellConstruction from './Worksheet_WellConstruction';
 import Worksheet_WellFluids from './Worksheet_WellFluids';
 import Worksheet_WellLocation from './Worksheet_WellLocation';
+import Worksheet_WellLogging from './Worksheet_WellLogging';
 
 function Worksheet() {
   const { setLoading } = useFirebase();
@@ -129,6 +130,7 @@ function Worksheet() {
             <Worksheet_Map />
             <Worksheet_WellConstruction />
             <Worksheet_WellFluids />
+            <Worksheet_WellLogging />
           </div>
           <button className="btn btn-outline btn-success" onClick={handleSaveWorksheet}>
             Save Worksheet
