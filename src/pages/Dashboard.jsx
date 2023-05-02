@@ -7,6 +7,7 @@ import Payment from '../components/dashboard/Payment';
 import UploadFile from '../components/dashboard/UploadFile';
 import Worksheet from '../components/dashboard/Worksheet';
 import FirebaseContext from '../context/auth/FirebaseContext';
+import { PaymentProvider } from '../context/auth/PaymentContext';
 import { WorksheetProvider } from '../context/auth/WorksheetContext';
 
 function Dashboard() {
@@ -92,14 +93,16 @@ function Dashboard() {
       </div>
       <div className="tab-content shadow-lg rounded-xl outline-1 outline outline-slate-200">
         <WorksheetProvider>
-          <Routes>
-            <Route path="/project" element={<CreateProject />} />
-            <Route path="/user" element={<CreateUser />} />
-            <Route path="/company" element={<CreateCompany />} />
-            <Route path="/deliverables" element={<UploadFile />} />
-            <Route path="/worksheet" element={<Worksheet />} />
-            <Route path="/payment" element={<Payment />} />
-          </Routes>
+          <PaymentProvider>
+            <Routes>
+              <Route path="/project" element={<CreateProject />} />
+              <Route path="/user" element={<CreateUser />} />
+              <Route path="/company" element={<CreateCompany />} />
+              <Route path="/deliverables" element={<UploadFile />} />
+              <Route path="/worksheet" element={<Worksheet />} />
+              <Route path="/payment" element={<Payment />} />
+            </Routes>
+          </PaymentProvider>
         </WorksheetProvider>
       </div>
     </section>
