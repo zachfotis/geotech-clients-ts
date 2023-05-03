@@ -51,3 +51,16 @@ export type Payment = {
   totalAmount: number;
   events: Event[];
 };
+
+export type User = {
+  accountType: string;
+  email: string;
+  firstname: string;
+  lastname: string;
+  profileImage: string;
+  timestamp: {
+    seconds: number;
+    nanoseconds: number;
+  };
+  userRef: string;
+};

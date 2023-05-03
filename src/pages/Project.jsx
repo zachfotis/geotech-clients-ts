@@ -1,3 +1,4 @@
+import { format } from 'date-fns';
 import { collection, deleteDoc, doc, getDoc, getDocs, orderBy, query, where } from 'firebase/firestore';
 import { deleteObject, getStorage, ref } from 'firebase/storage';
 import { useContext, useEffect, useState } from 'react';
@@ -7,6 +8,9 @@ import { Link, Navigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import NotFoundImage from '../assets/icons/not-found.png';
 import Modal from '../components/layout/Modal';
+import Project_CompanyInfo from '../components/project/Project_CompanyInfo';
+import Project_Map from '../components/project/Project_Map';
+import Project_ProjectInfo from '../components/project/Project_ProjectInfo';
 import FirebaseContext from '../context/auth/FirebaseContext';
 import { db } from '../firebase.config';
 
@@ -157,7 +161,12 @@ function Project() {
         {project.title} {project.isNew && <span className="badge badge-accent badge-md text-white">New</span>}
       </h1>
       {/* PROJECT INFO CONTAINER */}
-      <div className="project-info-container">
+      <div className="w-full flex justify-start items-justify gap-5 mt-5 flex-wrap">
+        <Project_ProjectInfo project={project} projectUser={projectUser} />
+        <Project_CompanyInfo projectCompany={projectCompany} />
+        <Project_Map projectID={project.id} />
+      </div>
+      {/* <div className="project-info-container">
         <div className="project-info shadow-lg outline outline-1 outline-cyan-50 bg-cyan-50">
           <div className="left-container">
             <h2>Reference:</h2>
@@ -187,7 +196,7 @@ function Project() {
             <span>{projectCompany?.phone}</span>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* MINI TOOLBAR */}
       {isAdmin && (
         <div className="mt-5 flex justify-start items-center gap-2 flex-wrap">
@@ -234,7 +243,9 @@ function Project() {
                       <h2>
                         {file.fileName} {file.description ? <i> ( {file.description} )</i> : ''}
                       </h2>
-                      <h2 className="uploaded">Uploaded: {new Date(file.timestamp.seconds * 1000).toLocaleString()}</h2>
+                      <h2 className="uploaded">
+                        Uploaded: {format(new Date(file.timestamp.seconds * 1000), 'LLL d, yyyy HH:mm')}
+                      </h2>
                       <div className="buttons">
                         {isAdmin ? (
                           <>

@@ -8,6 +8,7 @@ interface MapProps {
   userZoom?: number;
   setUserZoom?: (zoom: number) => void;
   mapType?: MapType;
+  draggable?: boolean;
 }
 
 export type MapType = 'satellite' | 'street' | 'topographic';
@@ -24,6 +25,7 @@ function Map({
   userZoom = 14,
   setUserZoom = () => {},
   mapType = 'satellite',
+  draggable = true,
 }: MapProps) {
   const onMarkerDragEnd = (e: DragEndEvent) => {
     const marker = e.target;
@@ -40,7 +42,7 @@ function Map({
       />
       <Marker
         position={position}
-        draggable
+        draggable={draggable}
         eventHandlers={{
           dragend: onMarkerDragEnd,
         }}

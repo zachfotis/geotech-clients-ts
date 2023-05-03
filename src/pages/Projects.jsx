@@ -1,3 +1,4 @@
+import { format } from 'date-fns';
 import { collection, deleteDoc, getDocs, orderBy, query, where } from 'firebase/firestore';
 import { deleteObject, getStorage, ref } from 'firebase/storage';
 import { useContext, useEffect, useState } from 'react';
@@ -182,7 +183,7 @@ function Projects() {
                   <p>{project.id}</p>
                   <p>{project.title}</p>
                   <p>{project.companyName}</p>
-                  <p>{new Date(project.date).toLocaleDateString()}</p>
+                  <p>{format(new Date(project.date), 'LLL dd, yyyy')}</p>
                   <div className="actions">
                     {isAdmin ? (
                       <>
@@ -220,7 +221,7 @@ function Projects() {
                   <p>{project.id}</p>
                   <p>{project.title}</p>
                   <p>{project.companyName}</p>
-                  <p>{new Date(project.date).toLocaleDateString()}</p>
+                  <p>{format(new Date(project.date), 'LLL dd, yyyy')}</p>
                   <div className="actions">
                     {isAdmin ? (
                       <>

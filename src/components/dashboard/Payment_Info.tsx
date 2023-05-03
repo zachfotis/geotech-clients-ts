@@ -1,8 +1,9 @@
 import ProgressBar from 'react-customizable-progressbar';
+import { MdDelete } from 'react-icons/md';
 import { usePaymentContext } from '../../context/auth/PaymentContext';
 
 function Payment_Info() {
-  const { paymentInfo, paymentInfoDispatch, savePaymentToDB } = usePaymentContext();
+  const { paymentInfo, paymentInfoDispatch, savePaymentToDB, deletePaymentFromDB } = usePaymentContext();
   const labelWidth = 'min-w-[150px]';
 
   return (
@@ -75,9 +76,17 @@ function Payment_Info() {
           }
         />
       </div>
-      <button className="mt-auto btn btn-outline btn-success" onClick={savePaymentToDB}>
-        Αποθηκευση Στοιχειων
-      </button>
+      <div className="w-full flex justify-between items-center">
+        <button className="mt-auto btn btn-outline btn-success" onClick={savePaymentToDB}>
+          Αποθηκευση Στοιχειων
+        </button>
+        <MdDelete
+          className="text-red-400 cursor-pointer text-2xl hover:text-red-500"
+          onClick={() => {
+            deletePaymentFromDB(paymentInfo.id);
+          }}
+        />
+      </div>
     </section>
   );
 }

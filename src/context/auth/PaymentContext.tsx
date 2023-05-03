@@ -15,6 +15,7 @@ type PaymentContextType = {
   setEvent: React.Dispatch<React.SetStateAction<Event>>;
   saveEventToDB: () => Promise<void>;
   deleteEventFromDB: (eventID: string) => Promise<void>;
+  deletePaymentFromDB: (paymentID: string) => Promise<void>;
 };
 
 export const createInitialState = (): Payment => {
@@ -51,6 +52,7 @@ const PaymentContext = createContext<PaymentContextType>({
   setEvent: () => {},
   saveEventToDB: () => Promise.resolve(),
   deleteEventFromDB: () => Promise.resolve(),
+  deletePaymentFromDB: () => Promise.resolve(),
 });
 
 export const usePaymentContext = () => {
@@ -223,6 +225,53 @@ export const PaymentProvider = ({ children }: { children: React.ReactNode }) => 
     }
   };
 
+  const deleteAllEventsFromDB = async (paymentID: string) => {
+    setLoading(true);
+    try {
+      const db = getFirestore();
+      const collectionRef = collection(db, 'events');
+      const q1 = where('paymentID', '==', paymentID);
+      const queryRef = query(collectionRef, q1);
+      const dataSnap = await getDocs(queryRef);
+      const data = dataSnap.docs.map((doc) => doc.data());
+      if (data.length > 0) {
+        data.forEach(async (event) => {
+          await deleteDoc(doc(db, 'events', event.id));
+        });
+        toast.success('All events deleted successfully');
+        paymentInfoDispatch({ type: 'SET_EVENTS', payload: [] });
+      }
+    } catch (error: any) {
+      if (error.hasOwnProperty('message')) {
+        toast.error(error.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deletePaymentFromDB = async (paymentID: string) => {
+    setLoading(true);
+    try {
+      const db = getFirestore();
+
+      // Delete payment
+      await deleteDoc(doc(db, 'payments', paymentID));
+
+      // Delete all events related to the payment
+      await deleteAllEventsFromDB(paymentID);
+
+      toast.success('Payment deleted successfully');
+      paymentInfoDispatch({ type: 'RESET_PAYMENT' });
+    } catch (error: any) {
+      if (error.hasOwnProperty('message')) {
+        toast.error(error.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <PaymentContext.Provider
       value={{
@@ -235,6 +284,7 @@ export const PaymentProvider = ({ children }: { children: React.ReactNode }) => 
         setEvent,
         saveEventToDB,
         deleteEventFromDB,
+        deletePaymentFromDB,
       }}
     >
       {children}
