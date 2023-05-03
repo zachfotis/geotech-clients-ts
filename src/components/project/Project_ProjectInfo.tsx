@@ -29,7 +29,7 @@ function Project_ProjectInfo({ project, projectUser }: ProjectInfoProps) {
   }, [project]);
 
   return (
-    <section className="flex-auto w-full lg:w-[380px] flex flex-col justify-start items-start gap-5 border border-blue-800 p-5 rounded-md shadow-md">
+    <section className="flex-auto w-full lg:w-[380px] flex flex-col justify-start items-start gap-2 border border-blue-800 p-5 rounded-md shadow-md">
       <h1 className="text-lg font-bold">Project Info</h1>
       <div className="flex flex-col justify-start items-start gap-3 py-2">
         <div className={commonClass0}>
