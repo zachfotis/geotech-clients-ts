@@ -9,7 +9,7 @@ interface ProjectMapProps {
 
 function Project_Map({ projectID }: ProjectMapProps) {
   const [position, setPosition] = useState<[number, number]>([0, 0]);
-  const [userZoom, setUserZoom] = useState(12);
+  const [userZoom, setUserZoom] = useState(13);
 
   useEffect(() => {
     const fetchWorksheetFromDB = async (projectID: number) => {
@@ -47,7 +47,7 @@ function Project_Map({ projectID }: ProjectMapProps) {
   if (!position[0] && !position[1]) return null;
 
   return (
-    <section className="flex-auto w-full lg:w-[380px] min-h-[300px] flex flex-col justify-start items-start gap-5 border border-blue-800 rounded-md shadow-md">
+    <section className="mt-5 w-full h-[300px] flex flex-col justify-start items-start gap-5 border border-blue-800 rounded-md shadow-md">
       {position[0] !== 0 && position[1] !== 0 ? (
         <Map position={position} userZoom={userZoom} setUserZoom={setUserZoom} draggable={false} />
       ) : (

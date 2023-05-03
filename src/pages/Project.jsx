@@ -164,8 +164,8 @@ function Project() {
       <div className="w-full flex justify-start items-justify gap-5 mt-5 flex-wrap">
         <Project_ProjectInfo project={project} projectUser={projectUser} />
         <Project_CompanyInfo projectCompany={projectCompany} />
-        <Project_Map projectID={project.id} />
       </div>
+      <Project_Map projectID={project.id} />
       {/* <div className="project-info-container">
         <div className="project-info shadow-lg outline outline-1 outline-cyan-50 bg-cyan-50">
           <div className="left-container">

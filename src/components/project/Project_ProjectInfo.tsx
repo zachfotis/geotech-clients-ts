@@ -1,5 +1,5 @@
-import { format } from 'date-fns';
-import { Timestamp } from 'firebase/firestore';
+import { format, parse } from 'date-fns';
+import { useEffect, useState } from 'react';
 import { Project, User } from '../../types';
 
 interface ProjectInfoProps {
@@ -8,13 +8,25 @@ interface ProjectInfoProps {
 }
 
 function Project_ProjectInfo({ project, projectUser }: ProjectInfoProps) {
+  const [projectDate, setProjectDate] = useState<string>('');
+
   const commonClass0 = 'w-full flex justify-start items-start gap-0 flex-col md:flex-row md:gap-5 md:items-start';
   const commonClass1 = 'min-w-[150px] text-lg';
   const commonClass2 = 'text-lg';
 
   // This is because of different TS and JS type configuration
-  const timestamp = project.timestamp as any;
-  const projectDate = format(new Timestamp(timestamp.seconds, timestamp.nanoseconds).toDate(), 'LLLL d, yyyy');
+  useEffect(() => {
+    if (typeof project.date === 'string') {
+      const date = project.date as any;
+      const parsedDate = parse(date, 'dd/MM/yyyy', new Date());
+      const formattedDate = format(parsedDate, 'LLL d, yyyy');
+      setProjectDate(formattedDate);
+    } else if (typeof project.date === 'number') {
+      const date = project.date as any;
+      const formattedDate = format(new Date(date), 'LLL d, yyyy');
+      setProjectDate(formattedDate);
+    }
+  }, [project]);
 
   return (
     <section className="flex-auto w-full lg:w-[380px] flex flex-col justify-start items-start gap-5 border border-blue-800 p-5 rounded-md shadow-md">
