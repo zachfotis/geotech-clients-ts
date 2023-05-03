@@ -11,8 +11,8 @@ function Project_ProjectInfo({ project, projectUser }: ProjectInfoProps) {
   const [projectDate, setProjectDate] = useState<string>('');
 
   const commonClass0 = 'w-full flex justify-start items-start gap-0 flex-col md:flex-row md:gap-5 md:items-start';
-  const commonClass1 = 'min-w-[150px] text-lg';
-  const commonClass2 = 'text-lg';
+  const commonClass1 = 'min-w-[150px] text-base';
+  const commonClass2 = 'text-base';
 
   // This is because of different TS and JS type configuration
   useEffect(() => {

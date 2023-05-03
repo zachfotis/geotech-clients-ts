@@ -6,8 +6,8 @@ interface CompanyInfoProps {
 
 function Project_CompanyInfo({ projectCompany }: CompanyInfoProps) {
   const commonClass0 = 'w-full flex justify-start items-start gap-0 flex-col md:flex-row md:gap-5 md:items-start';
-  const commonClass1 = 'min-w-[100px] text-lg';
-  const commonClass2 = 'text-lg';
+  const commonClass1 = 'min-w-[100px] text-base';
+  const commonClass2 = 'text-base';
 
   return (
     <section className="flex-auto w-full lg:w-[380px] flex flex-col justify-start items-start gap-2 border border-blue-800 p-5 rounded-md shadow-md">
