@@ -1,13 +1,13 @@
 import { format } from 'date-fns';
 import { BsPatchQuestion } from 'react-icons/bs';
 import { FcAdvance, FcApproval, FcCancel } from 'react-icons/fc';
-import { RiExchangeDollarLine } from 'react-icons/ri';
+import { RiDeleteBack2Fill, RiExchangeDollarLine } from 'react-icons/ri';
 import { TfiReceipt } from 'react-icons/tfi';
 import { usePaymentContext } from '../../context/auth/PaymentContext';
 import { EventTypeEnum } from '../../types';
 
 function Payment_Timeline() {
-  const { paymentInfo } = usePaymentContext();
+  const { paymentInfo, deleteEventFromDB } = usePaymentContext();
 
   return (
     <section className="w-[450px] flex flex-col justify-start items-start gap-3 border p-3 rounded-md shadow-md">
@@ -17,7 +17,10 @@ function Payment_Timeline() {
           {paymentInfo?.events
             .sort((a, b) => new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime())
             .map((event, index) => (
-              <div key={index} className="w-full flex justify-center items-start gap-5">
+              <div
+                key={index}
+                className="relative w-full flex justify-center items-start gap-5 group hover:bg-gray-100 p-2 rounded-md"
+              >
                 {event.type === EventTypeEnum.PAYMENT && <RiExchangeDollarLine className="text-green-600 text-3xl" />}
                 {event.type === EventTypeEnum.ADVANCE && <FcAdvance className="text-blue-600 text-3xl" />}
                 {event.type === EventTypeEnum.INVOICE && <TfiReceipt className="text-yellow-600 text-3xl" />}
@@ -31,6 +34,12 @@ function Payment_Timeline() {
                   {/* comments */}
                   {event.comment && <p className="text-xs text-gray-700 font-[300]">{event.comment}</p>}
                 </div>
+                <RiDeleteBack2Fill
+                  className="text-red-600 text-3xl cursor-pointer invisible group-hover:visible hover:text-red-700"
+                  onClick={() => {
+                    deleteEventFromDB(event.id);
+                  }}
+                />
               </div>
             ))}
         </div>

@@ -1,16 +1,18 @@
-import { useState, useEffect, useContext } from 'react';
-import { getDocs, getDoc, addDoc, doc, collection, where, serverTimestamp, query, orderBy } from 'firebase/firestore';
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { db } from '../../firebase.config';
-import FirebaseContext from '../../context/auth/FirebaseContext';
+import { addDoc, collection, doc, getDoc, getDocs, orderBy, query, serverTimestamp, where } from 'firebase/firestore';
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
+import { useContext, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import FirebaseContext from '../../context/auth/FirebaseContext';
+import { db } from '../../firebase.config';
 
 function UploadFile() {
   const { setLoading } = useContext(FirebaseContext);
+  const { state } = useLocation();
   const [projects, setProjects] = useState([]);
   const [companies, setCompanies] = useState([]);
-  const [selectedCompany, setSelectedCompany] = useState('default');
-  const [selectedProject, setSelectedProject] = useState('default');
+  const [selectedCompany, setSelectedCompany] = useState(state && state.companyRef ? state.companyRef : 'default');
+  const [selectedProject, setSelectedProject] = useState(state && state.id ? state.id : 'default');
   const [selectedCategory, setSelectedCategory] = useState('default');
   const [selectedType, setSelectedType] = useState('default');
   const [selectedFile, setSelectedFile] = useState({

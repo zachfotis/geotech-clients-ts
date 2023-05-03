@@ -1,7 +1,9 @@
 import { collection, deleteDoc, doc, getDoc, getDocs, orderBy, query, where } from 'firebase/firestore';
 import { deleteObject, getStorage, ref } from 'firebase/storage';
 import { useContext, useEffect, useState } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { IoDocumentOutline } from 'react-icons/io5';
+import { MdAttachFile, MdOutlinePayment } from 'react-icons/md';
+import { Link, Navigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import NotFoundImage from '../assets/icons/not-found.png';
 import Modal from '../components/layout/Modal';
@@ -154,6 +156,7 @@ function Project() {
       <h1>
         {project.title} {project.isNew && <span className="badge badge-accent badge-md text-white">New</span>}
       </h1>
+      {/* PROJECT INFO CONTAINER */}
       <div className="project-info-container">
         <div className="project-info shadow-lg outline outline-1 outline-cyan-50 bg-cyan-50">
           <div className="left-container">
@@ -185,6 +188,23 @@ function Project() {
           </div>
         </div>
       </div>
+      {/* MINI TOOLBAR */}
+      {isAdmin && (
+        <div className="mt-5 flex justify-start items-center gap-2 flex-wrap">
+          <Link className="mt-auto btn btn-sm rounded-md bg-success" to={`/dashboard/deliverables`} state={project}>
+            <MdAttachFile className="mr-2 text-lg" />
+            New File
+          </Link>
+          <Link className="mt-auto btn btn-sm rounded-md bg-success" to={`/dashboard/worksheet`} state={project}>
+            <IoDocumentOutline className="mr-2 text-lg" />
+            New Worksheet
+          </Link>
+          <Link className="mt-auto btn btn-sm rounded-md bg-success" to={`/dashboard/payment`} state={project}>
+            <MdOutlinePayment className="mr-2 text-lg" />
+            New Payment
+          </Link>
+        </div>
+      )}
       {/* FILES */}
       {categories && Object.keys(categories).length === 0 && (
         <div className="not-found-container flex flex-col justify-center items-center w-full mt-10">

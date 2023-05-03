@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useFirebase } from '../../context/auth/FirebaseContext';
 import { useWorksheetContext } from '../../context/auth/WorksheetContext';
 import { Company, Project } from '../../types';
@@ -13,6 +14,12 @@ import Worksheet_WellLocation from './Worksheet_WellLocation';
 import Worksheet_WellLogging from './Worksheet_WellLogging';
 
 function Worksheet() {
+  const {
+    state,
+  }: {
+    state: Project;
+  } = useLocation();
+
   const { setLoading } = useFirebase();
   const { worksheetInfo, fetchWorksheetFromDB, saveWorksheetToDB } = useWorksheetContext();
 
@@ -23,6 +30,27 @@ function Worksheet() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   const [isReadyToCreate, setIsReadyToCreate] = useState(false);
+
+  // Use useLocation State
+  useEffect(() => {
+    if (state && !selectedCompany) {
+      // Get company from state
+      const stateCompany = companies.find((company) => company.vat === state.companyRef);
+
+      if (stateCompany) {
+        setSelectedCompany(stateCompany);
+      }
+    }
+
+    if (state && !selectedProject) {
+      // Get project from state
+      const stateProject = projects.find((project) => project.id === state.id);
+
+      if (stateProject) {
+        setSelectedProject(stateProject);
+      }
+    }
+  }, [companies, projects]);
 
   // Get Companies
   useEffect(() => {

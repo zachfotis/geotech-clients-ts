@@ -2,7 +2,7 @@ import { usePaymentContext } from '../../context/auth/PaymentContext';
 import { EventTypeEnum } from '../../types';
 
 function Payment_Event() {
-  const { savePaymentToDB, isPaymentSaveOnDB, event, setEvent, saveEventToDB } = usePaymentContext();
+  const { paymentInfo, isPaymentSaveOnDB, event, setEvent, saveEventToDB } = usePaymentContext();
   const labelWidth = 'min-w-[120px]';
 
   return (
@@ -40,10 +40,23 @@ function Payment_Event() {
               className="w-full input input-bordered input-sm"
               value={event?.type || 'default'}
               onChange={(e) => {
-                setEvent({
-                  ...event,
+                setEvent((prevEvent) => ({
+                  ...prevEvent,
                   type: e.target.value as EventTypeEnum,
-                });
+                }));
+
+                if (e.target.value === EventTypeEnum.SETTLEMENT) {
+                  setEvent((prevEvent) => ({
+                    ...prevEvent,
+                    amount:
+                      paymentInfo?.totalAmount - paymentInfo?.events.reduce((acc, event) => acc + event.amount, 0),
+                  }));
+                } else {
+                  setEvent((prevEvent) => ({
+                    ...prevEvent,
+                    amount: 0,
+                  }));
+                }
               }}
               id="event-type"
             >

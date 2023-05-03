@@ -25,6 +25,26 @@ function Worksheet_ProjectInfo() {
               type: 'SET_PROJECT_INFO_DATE',
               payload: new Date(e.target.value),
             });
+
+            worksheetInfoDispatch({
+              type: 'SET_MOBILE_UNIT_DEPARTURE',
+              payload: new Date(e.target.value),
+            });
+
+            worksheetInfoDispatch({
+              type: 'SET_MOBILE_UNIT_ARRIVAL',
+              payload: new Date(e.target.value),
+            });
+
+            worksheetInfoDispatch({
+              type: 'SET_MOBILE_UNIT_START',
+              payload: new Date(e.target.value),
+            });
+
+            worksheetInfoDispatch({
+              type: 'SET_MOBILE_UNIT_END',
+              payload: new Date(e.target.value),
+            });
           }}
         />
       </div>

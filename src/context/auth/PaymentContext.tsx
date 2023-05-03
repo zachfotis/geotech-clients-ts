@@ -1,4 +1,4 @@
-import { Timestamp, collection, doc, getDocs, getFirestore, query, setDoc, where } from 'firebase/firestore';
+import { Timestamp, collection, deleteDoc, doc, getDocs, getFirestore, query, setDoc, where } from 'firebase/firestore';
 import { createContext, useContext, useEffect, useReducer, useState } from 'react';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
@@ -14,6 +14,7 @@ type PaymentContextType = {
   event: Event;
   setEvent: React.Dispatch<React.SetStateAction<Event>>;
   saveEventToDB: () => Promise<void>;
+  deleteEventFromDB: (eventID: string) => Promise<void>;
 };
 
 export const createInitialState = (): Payment => {
@@ -49,6 +50,7 @@ const PaymentContext = createContext<PaymentContextType>({
   event: createEventInitialState(''),
   setEvent: () => {},
   saveEventToDB: () => Promise.resolve(),
+  deleteEventFromDB: () => Promise.resolve(),
 });
 
 export const usePaymentContext = () => {
@@ -202,6 +204,25 @@ export const PaymentProvider = ({ children }: { children: React.ReactNode }) => 
     }
   };
 
+  const deleteEventFromDB = async (eventID: string) => {
+    setLoading(true);
+    try {
+      const db = getFirestore();
+      await deleteDoc(doc(db, 'events', eventID));
+      toast.success('Event deleted successfully');
+      paymentInfoDispatch({
+        type: 'SET_EVENTS',
+        payload: paymentInfo.events.filter((event) => event.id !== eventID),
+      });
+    } catch (error: any) {
+      if (error.hasOwnProperty('message')) {
+        toast.error(error.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <PaymentContext.Provider
       value={{
@@ -213,6 +234,7 @@ export const PaymentProvider = ({ children }: { children: React.ReactNode }) => 
         event,
         setEvent,
         saveEventToDB,
+        deleteEventFromDB,
       }}
     >
       {children}
