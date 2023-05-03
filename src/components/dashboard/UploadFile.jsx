@@ -384,9 +384,11 @@ function UploadFile() {
               const ext = e.target.files[0].name.split('.')[splitLength - 1];
               let imgSource = null;
               try {
-                imgSource = require(`../../assets/file-types/${ext}.png`);
+                imgSource = new URL(`../../assets/file-types/${ext}.png`, import.meta.url).href;
+
+                if (imgSource.includes('undefined')) throw new Error('File type not supported');
               } catch (error) {
-                imgSource = require('../../assets/file-types/unknown.png');
+                imgSource = new URL('../../assets/file-types/unknown.png', import.meta.url).href;
               }
 
               setSelectedFile({
