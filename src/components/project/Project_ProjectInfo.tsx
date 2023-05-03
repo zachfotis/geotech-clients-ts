@@ -16,12 +16,7 @@ function Project_ProjectInfo({ project, projectUser }: ProjectInfoProps) {
 
   // This is because of different TS and JS type configuration
   useEffect(() => {
-    if (typeof project.date === 'string') {
-      const date = project.date as any;
-      const parsedDate = parse(date, 'dd/MM/yyyy', new Date());
-      const formattedDate = format(parsedDate, 'LLL d, yyyy');
-      setProjectDate(formattedDate);
-    } else if (typeof project.date === 'number') {
+    if (typeof project.date === 'number') {
       const date = project.date as any;
       const formattedDate = format(new Date(date), 'LLL d, yyyy');
       setProjectDate(formattedDate);
