@@ -1,5 +1,4 @@
 import { DragEndEvent } from 'leaflet';
-import 'leaflet/dist/leaflet.css';
 import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet';
 
 interface MapProps {
