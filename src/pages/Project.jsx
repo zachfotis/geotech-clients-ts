@@ -166,37 +166,6 @@ function Project() {
         <Project_CompanyInfo projectCompany={projectCompany} />
       </div>
       <Project_Map projectID={project.id} />
-      {/* <div className="project-info-container">
-        <div className="project-info shadow-lg outline outline-1 outline-cyan-50 bg-cyan-50">
-          <div className="left-container">
-            <h2>Reference:</h2>
-            <span>{project.id}</span>
-            <h2>Contact Person: </h2>
-            <span>
-              {projectUser?.firstname} {projectUser?.lastname}
-            </span>
-            <h2>Contact Email: </h2>
-            <a href={`mailto:${projectUser?.email}`}>{projectUser?.email}</a>
-            <h2>Project Date:</h2>
-            <span>{project.date}</span>
-          </div>
-          <div className="right-container ">
-            <h2>Company:</h2>
-            <span>
-              {projectCompany?.title} {projectCompany?.vat}
-            </span>
-            <h2>Address:</h2>
-            <span>
-              {projectCompany?.address} {projectCompany?.number}, {projectCompany?.zip}, {projectCompany?.city}{' '}
-              {projectCompany?.country}
-            </span>
-            <h2>Email:</h2>
-            <a href={`mailto:${projectCompany?.email}`}>{projectCompany?.email}</a>
-            <h2>Phone:</h2>
-            <span>{projectCompany?.phone}</span>
-          </div>
-        </div>
-      </div> */}
       {/* MINI TOOLBAR */}
       {isAdmin && (
         <div className="mt-5 flex justify-start items-center gap-2 flex-wrap">
