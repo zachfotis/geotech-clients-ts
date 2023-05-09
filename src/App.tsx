@@ -3,6 +3,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './components/layout/Navbar';
 import { useFirebase } from './context/auth/FirebaseContext';
+import Comp404 from './pages/404';
 import Dashboard from './pages/Dashboard';
 import ForgotPassword from './pages/ForgotPassword';
 import Home from './pages/Home';
@@ -12,7 +13,7 @@ import Project from './pages/Project';
 import Projects from './pages/Projects';
 
 function App() {
-  const { loggedIn } = useFirebase();
+  const { loggedIn, isAdmin } = useFirebase();
 
   return (
     <BrowserRouter>
@@ -26,7 +27,8 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/project/:id" element={<Project />} />
             <Route path="/projects" element={<Projects />} />
-            <Route path="/dashboard/*" element={<Dashboard />}></Route>
+            {isAdmin && <Route path="/dashboard/*" element={<Dashboard />} />}
+            <Route path="/*" element={<Comp404 />} />
           </Routes>
         ) : (
           <Routes>
