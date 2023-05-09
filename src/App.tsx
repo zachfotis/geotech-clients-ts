@@ -23,8 +23,7 @@ function App() {
         {loggedIn ? (
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/login" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/project/:id" element={<Project />} />
             <Route path="/projects" element={<Projects />} />
@@ -34,6 +33,7 @@ function App() {
           </Routes>
         ) : (
           <Routes>
+            <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/*" element={<Login />} />
           </Routes>
