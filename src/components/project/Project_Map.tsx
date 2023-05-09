@@ -1,6 +1,6 @@
 import { collection, getDocs, getFirestore, query, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { Worksheet } from '../../context/auth/WorksheetContext';
+import { Worksheet } from '../../types';
 import Map from '../common/Map';
 
 interface ProjectMapProps {
