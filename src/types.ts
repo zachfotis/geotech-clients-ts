@@ -63,4 +63,5 @@ export type User = {
     nanoseconds: number;
   };
   userRef: string;
+  uid?: string;
 };

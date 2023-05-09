@@ -1,8 +1,8 @@
-import { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
-import FirebaseContext from '../context/auth/FirebaseContext';
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import FirebaseContext from '../context/auth/FirebaseContext';
 
 function ForgotPassword() {
   const { setLoading } = useContext(FirebaseContext);
@@ -26,9 +26,9 @@ function ForgotPassword() {
     } catch (error) {
       setLoading(false);
       return toast.error('Something went wrong');
+    } finally {
+      navigate('/login');
     }
-
-    navigate('/login');
   };
 
   return (

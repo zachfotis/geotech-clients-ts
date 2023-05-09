@@ -1,23 +1,22 @@
-import { useContext, useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
 import {
-  getAuth,
-  updateEmail,
-  updateProfile,
-  updatePassword,
-  reauthenticateWithCredential,
   EmailAuthProvider,
+  getAuth,
+  reauthenticateWithCredential,
+  updateEmail,
+  updatePassword,
+  updateProfile,
 } from 'firebase/auth';
-import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'firebase/storage';
-import { updateDoc, doc } from 'firebase/firestore';
-import { db } from '../firebase.config';
-import FirebaseContext from '../context/auth/FirebaseContext';
+import { doc, updateDoc } from 'firebase/firestore';
+import { deleteObject, getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
+import { useContext, useEffect, useState } from 'react';
 import Avatar from 'react-avatar';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
+import FirebaseContext from '../context/auth/FirebaseContext';
+import { db } from '../firebase.config';
 
 function Profile() {
-  const { loggedIn, user, setUpdateProfileRequest, setLoading } = useContext(FirebaseContext);
+  const { user, setUpdateProfileRequest, setLoading } = useContext(FirebaseContext);
   const [editingElement, setEditingElement] = useState(null);
   const [email, setEmail] = useState('');
   const [firstname, setFirstname] = useState('');
@@ -170,10 +169,6 @@ function Profile() {
       setLoading(false);
     }
   };
-
-  if (!loggedIn || !user) {
-    return <Navigate to="/login" />;
-  }
 
   return (
     <section className="profile-section">

@@ -1,17 +1,15 @@
-import { useContext, useEffect, useState } from 'react';
-import { NavLink, Navigate, Route, Routes } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { NavLink, Route, Routes } from 'react-router-dom';
 import CreateCompany from '../components/dashboard/CreateCompany';
 import CreateProject from '../components/dashboard/CreateProject';
 import CreateUser from '../components/dashboard/CreateUser';
 import Payment from '../components/dashboard/Payment';
 import UploadFile from '../components/dashboard/UploadFile';
 import Worksheet from '../components/dashboard/Worksheet';
-import FirebaseContext from '../context/auth/FirebaseContext';
 import { PaymentProvider } from '../context/auth/PaymentContext';
 import { WorksheetProvider } from '../context/auth/WorksheetContext';
 
 function Dashboard() {
-  const { user, loggedIn } = useContext(FirebaseContext);
   const [isServerConnecting, setIsServerConnecting] = useState(false);
   const [isServerConnected, setIsServerConnected] = useState(false);
 
@@ -39,10 +37,6 @@ function Dashboard() {
 
   // Apply style to active tab
   const activeLink = ({ isActive }) => (isActive ? 'tab tab-lifted tab-active' : 'tab tab-lifted');
-
-  if (!loggedIn || !user) {
-    return <Navigate to="/login" />;
-  }
 
   return (
     <section className="dashboard-section">

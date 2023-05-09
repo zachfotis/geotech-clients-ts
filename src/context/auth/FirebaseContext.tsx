@@ -4,17 +4,40 @@ import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { db } from '../../firebase.config';
 
 import Spinner from '../../components/layout/Spinner';
+import { User } from '../../types';
 
-const FirebaseContext = createContext();
+const initializeUser: User = {
+  accountType: '',
+  email: '',
+  firstname: '',
+  lastname: '',
+  profileImage: '',
+  timestamp: {
+    seconds: 0,
+    nanoseconds: 0,
+  },
+  userRef: '',
+};
+
+const FirebaseContext = createContext({
+  user: initializeUser,
+  loading: false,
+  loggedIn: false,
+  isAdmin: false,
+  isSuperAdmin: false,
+  setLoading: (loading: boolean) => {},
+  setLoggedIn: (loggedIn: boolean) => {},
+  setUpdateProfileRequest: (updateProfileRequest: boolean) => {},
+});
 
 export const useFirebase = () => {
   return useContext(FirebaseContext);
 };
 
-export const FirebaseProvider = ({ children }) => {
+export const FirebaseProvider = ({ children }: { children: React.ReactNode }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(initializeUser);
   const [isAdmin, setIsAdmin] = useState(user?.accountType === 'admin' ? true : false);
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
   const [updateProfileRequest, setUpdateProfileRequest] = useState(false);
@@ -34,12 +57,12 @@ export const FirebaseProvider = ({ children }) => {
 
           setUser({
             ...userData,
-            uid: user.uid,
-          });
+            uid: user?.uid ? user.uid : '',
+          } as User);
 
           setLoggedIn(true);
         } else {
-          setUser(null);
+          setUser(initializeUser);
           setLoggedIn(false);
         }
         setLoading(false);

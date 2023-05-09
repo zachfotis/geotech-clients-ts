@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 import { collection, deleteDoc, getDocs, orderBy, query, where } from 'firebase/firestore';
 import { deleteObject, getStorage, ref } from 'firebase/storage';
 import { useContext, useEffect, useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import NotFoundImage from '../assets/icons/not-found.png';
 import Modal from '../components/layout/Modal';
@@ -105,10 +105,6 @@ function Projects() {
     setModalId('');
     closeModal();
   };
-
-  if (!loggedIn || !user) {
-    return <Navigate to="/login" />;
-  }
 
   return (
     <section className="projects-section">

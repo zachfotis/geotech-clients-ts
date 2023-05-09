@@ -1,9 +1,9 @@
-import { useState, useContext, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import FirebaseContext from '../context/auth/FirebaseContext';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import logo from '../assets/images/logo_icon.png';
+import FirebaseContext from '../context/auth/FirebaseContext';
 
 function Login() {
   const [credentials, setCredentials] = useState({
@@ -11,18 +11,13 @@ function Login() {
     password: '',
   });
   const { user, setLoading } = useContext(FirebaseContext);
-  const navigate = useNavigate();
 
   const onSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
       const auth = getAuth();
-      const userCredentials = await signInWithEmailAndPassword(
-        auth,
-        credentials.email,
-        credentials.password
-      );
+      const userCredentials = await signInWithEmailAndPassword(auth, credentials.email, credentials.password);
       if (userCredentials.user) {
       }
     } catch (error) {
@@ -33,10 +28,7 @@ function Login() {
 
   useEffect(() => {
     if (user) {
-      user?.accountType === 'admin'
-        ? toast.info('Admin privileges granted!')
-        : toast.success('Login successful!');
-      navigate('/projects');
+      user?.accountType === 'admin' ? toast.info('Admin privileges granted!') : toast.success('Login successful!');
     }
   }, [user]); // eslint-disable-line
 
@@ -89,10 +81,7 @@ function Login() {
 
           <div className="flex items-center justify-start">
             <div className="text-sm">
-              <Link
-                to="/forgot-password"
-                className={`font-medium text-teal-600 hover:text-teal-500`}
-              >
+              <Link to="/forgot-password" className={`font-medium text-teal-600 hover:text-teal-500`}>
                 Forgot your password?
               </Link>
             </div>

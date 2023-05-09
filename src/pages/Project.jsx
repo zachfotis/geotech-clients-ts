@@ -4,7 +4,7 @@ import { deleteObject, getStorage, ref } from 'firebase/storage';
 import { useContext, useEffect, useState } from 'react';
 import { IoDocumentOutline } from 'react-icons/io5';
 import { MdAttachFile, MdOutlinePayment } from 'react-icons/md';
-import { Link, Navigate, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import NotFoundImage from '../assets/icons/not-found.png';
 import Modal from '../components/layout/Modal';
@@ -139,10 +139,6 @@ function Project() {
     setLoading(false);
     getProjectData();
   };
-
-  if (!loggedIn || !user) {
-    return <Navigate to="/login" />;
-  }
 
   if (isLoading) {
     return <></>;
