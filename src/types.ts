@@ -65,3 +65,87 @@ export type User = {
   userRef: string;
   uid?: string;
 };
+
+export type Worksheet = {
+  id: string;
+  projectID: number;
+  createdAt: Date;
+  updatedAt: Date;
+  projectInfo: {
+    date: Date;
+    client: string;
+    project: string;
+    projectManager: string;
+    charge: string;
+    rigCompany: string;
+  };
+  wellLocation: {
+    dktk: string;
+    position: string;
+    municipality: string;
+    pe: string;
+    coordinatesWGS84: {
+      f: {
+        degrees: number;
+        minutes: number;
+        seconds: number;
+      };
+      l: {
+        degrees: number;
+        minutes: number;
+        seconds: number;
+      };
+    };
+    coordinatesEGSA87: {
+      y: number;
+      x: number;
+    };
+    altitude: number;
+  };
+  wellConstruction: {
+    completed: {
+      tubingDepth: number;
+      tubingDiameter: string;
+      casingDepth: number;
+    };
+    planned: {
+      drillingDepth: number;
+      drillingDiameter: string;
+      casingDepth: number;
+    };
+  };
+  wellFluids: {
+    completed: {
+      waterLevel: number;
+      waterCond: number;
+    };
+    planned: {
+      mudLevel: number;
+      mudCond: number;
+      waterCond: number;
+    };
+  };
+  wellLogging: {
+    type: string;
+    probe: string;
+    depth: number;
+    filename: string;
+    responsible: string;
+  };
+  mobileUnit: {
+    vehicle: string;
+    generator: string;
+    drum: string;
+    crew: string[];
+    departure: Date;
+    arrival: Date;
+    start: Date;
+    end: Date;
+    overnight: boolean;
+  };
+  contactInfo: {
+    client: string;
+    contractor: string;
+    operator: string;
+  };
+};

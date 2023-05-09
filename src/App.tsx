@@ -11,6 +11,7 @@ import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Project from './pages/Project';
 import Projects from './pages/Projects';
+import Status from './pages/Status';
 
 function App() {
   const { loggedIn, isAdmin } = useFirebase();
@@ -28,6 +29,7 @@ function App() {
             <Route path="/project/:id" element={<Project />} />
             <Route path="/projects" element={<Projects />} />
             {isAdmin && <Route path="/dashboard/*" element={<Dashboard />} />}
+            {isAdmin && <Route path="/status" element={<Status />} />}
             <Route path="/*" element={<Comp404 />} />
           </Routes>
         ) : (

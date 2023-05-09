@@ -2,6 +2,7 @@ import { Timestamp, collection, doc, getDocs, getFirestore, query, setDoc, where
 import { createContext, useContext, useEffect, useReducer, useState } from 'react';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
+import { Worksheet } from '../../types';
 import { InventoryData, UserType, getEmployees, getInventory } from '../../utils/common-functions';
 import { convertEGSA87toWGS84, convertWGS84toEGSA87 } from '../../utils/converter';
 import { useFirebase } from './FirebaseContext';
@@ -15,90 +16,6 @@ type WorksheetContextType = {
   handleEGSA87toWGS84: () => void;
   inventoryData: InventoryData;
   employees: UserType[];
-};
-
-export type Worksheet = {
-  id: string;
-  projectID: number;
-  createdAt: Date;
-  updatedAt: Date;
-  projectInfo: {
-    date: Date;
-    client: string;
-    project: string;
-    projectManager: string;
-    charge: string;
-    rigCompany: string;
-  };
-  wellLocation: {
-    dktk: string;
-    position: string;
-    municipality: string;
-    pe: string;
-    coordinatesWGS84: {
-      f: {
-        degrees: number;
-        minutes: number;
-        seconds: number;
-      };
-      l: {
-        degrees: number;
-        minutes: number;
-        seconds: number;
-      };
-    };
-    coordinatesEGSA87: {
-      y: number;
-      x: number;
-    };
-    altitude: number;
-  };
-  wellConstruction: {
-    completed: {
-      tubingDepth: number;
-      tubingDiameter: string;
-      casingDepth: number;
-    };
-    planned: {
-      drillingDepth: number;
-      drillingDiameter: string;
-      casingDepth: number;
-    };
-  };
-  wellFluids: {
-    completed: {
-      waterLevel: number;
-      waterCond: number;
-    };
-    planned: {
-      mudLevel: number;
-      mudCond: number;
-      waterCond: number;
-    };
-  };
-  wellLogging: {
-    type: string;
-    probe: string;
-    depth: number;
-    filename: string;
-    responsible: string;
-  };
-  mobileUnit: {
-    vehicle: string;
-    generator: string;
-    drum: string;
-    crew: string[];
-    departure: Date;
-    arrival: Date;
-    start: Date;
-    end: Date;
-    overnight: boolean;
-  };
-  contactInfo: {
-    client: string;
-    contractor: string;
-    operator: string;
-  };
 };
 
 type WorksheetActions =
