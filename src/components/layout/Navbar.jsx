@@ -1,10 +1,10 @@
-import { useContext } from 'react';
-import { Link } from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
-import FirebaseContext from '../../context/auth/FirebaseContext';
+import { useContext } from 'react';
+import Avatar from 'react-avatar';
+import { Link } from 'react-router-dom';
 import LogoIcon from '../../assets/images/logo_icon.png';
 import userDefaultImage from '../../assets/images/user.png';
-import Avatar from 'react-avatar';
+import FirebaseContext from '../../context/auth/FirebaseContext';
 
 function Navbar() {
   const { user, loggedIn, setLoading } = useContext(FirebaseContext);
@@ -60,11 +60,18 @@ function Navbar() {
               {loggedIn ? (
                 <>
                   {loggedIn && user?.accountType === 'admin' ? (
-                    <li>
-                      <Link to="/dashboard/user">
-                        Dashboard <span className="badge badge-secondary badge-sm">admin</span>{' '}
-                      </Link>
-                    </li>
+                    <>
+                      <li>
+                        <Link to="/dashboard/user">
+                          Dashboard <span className="badge badge-secondary badge-sm">admin</span>{' '}
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/status">
+                          Status <span className="badge badge-secondary badge-sm">admin</span>{' '}
+                        </Link>
+                      </li>
+                    </>
                   ) : null}
                   <li>
                     <Link to="/projects">Projects</Link>
